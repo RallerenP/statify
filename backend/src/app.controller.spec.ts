@@ -1,7 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { HttpService } from '@nest/https'
 
 describe('AppController', () => {
   let appController: AppController;

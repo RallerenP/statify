@@ -15,6 +15,7 @@
     "cssnano": "^5.0.8",
     "postcss": "^8.3.9",
     "postcss-load-config": "^3.1.0",
+    "sass": "^1.42.1",
     "svelte": "^3.37.0",
     "svelte-check": "^2.1.0",
     "svelte-preprocess": "^4.9.8",
@@ -26,6 +27,8 @@
   "dependencies": {
     "@tailwindcss/typography": "^0.4.1",
     "daisyui": "^1.16.0",
+    "gridstack": "^4.3.1",
+    "svelte-hero-icons": "^3.0.0",
     "theme-change": "^2.0.2"
   }
 }

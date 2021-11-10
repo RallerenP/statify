@@ -1,8 +1,8 @@
 Arguments: 
-  /home/rallerenp/.nvm/versions/node/v14.18.1/bin/node /mnt/c/Program Files (x86)/Yarn/bin/yarn.js add daisy-ui
+  /home/rallerenp/.nvm/versions/node/v14.18.1/bin/node /mnt/c/Program Files (x86)/Yarn/bin/yarn.js add hero-icons-svelte
 
 PATH: 
-  /home/rallerenp/.vscode-server/bin/6cba118ac49a1b88332f312a8f67186f7f3c1643/bin:/home/rallerenp/.nvm/versions/node/v14.18.1/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/mnt/c/Program Files (x86)/Intel/Intel(R) Management Engine Components/iCLS/:/mnt/c/Program Files/Intel/Intel(R) Management Engine Components/iCLS/:/mnt/c/Program Files/ImageMagick-7.1.0-Q16:/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath:/mnt/c/Program Files/ImageMagick-7.1.0-Q16-HDRI:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0/:/mnt/c/Windows/System32/OpenSSH/:/mnt/c/Program Files/Microsoft VS Code/bin:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR:/mnt/c/ProgramData/chocolatey/bin:/mnt/c/Program Files/Git/cmd:/mnt/c/Program Files/nodejs/:/mnt/c/Program Files (x86)/Yarn/bin/:/mnt/c/ProgramData/nvm:/mnt/c/Program Files/nodejs:/mnt/c/Program Files (x86)/Intel/Intel(R) Management Engine Components/DAL:/mnt/c/Program Files/Intel/Intel(R) Management Engine Components/DAL:/mnt/c/Program Files (x86)/Intel/Intel(R) Management Engine Components/IPT:/mnt/c/Program Files/Intel/Intel(R) Management Engine Components/IPT:/mnt/c/Program Files/dotnet/:/mnt/c/Users/rasmu/AppData/Local/Microsoft/WindowsApps:/mnt/c/Program Files (x86)/SVP 4/mpv64:/mnt/c/Users/rasmu/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/tools/msys64:/mnt/c/Users/rasmu/AppData/Roaming/cabal/bin:/mnt/c/tools/ghc-9.0.1/bin:/mnt/c/Program Files/JetBrains/IntelliJ IDEA 2021.1.1/bin:/mnt/c/Users/rasmu/AppData/Roaming/npm:/mnt/c/Users/rasmu/AppData/Local/Yarn/bin:/mnt/c/Users/rasmu/AppData/Local/gitkraken/bin:/mnt/c/Users/rasmu/AppData/Local/atom/bin:/mnt/c/Users/rasmu/.dotnet/tools:/mnt/c/Users/rasmu/AppData/Local/GitHubDesktop/bin
+  /home/rallerenp/.vscode-server/bin/b3318bc0524af3d74034b8bb8a64df0ccf35549a/bin:/home/rallerenp/.nvm/versions/node/v14.18.1/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/mnt/c/Program Files (x86)/Intel/Intel(R) Management Engine Components/iCLS/:/mnt/c/Program Files/Intel/Intel(R) Management Engine Components/iCLS/:/mnt/c/Program Files/ImageMagick-7.1.0-Q16:/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath:/mnt/c/Program Files/ImageMagick-7.1.0-Q16-HDRI:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0/:/mnt/c/Windows/System32/OpenSSH/:/mnt/c/Program Files/Microsoft VS Code/bin:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR:/mnt/c/ProgramData/chocolatey/bin:/mnt/c/Program Files/Git/cmd:/mnt/c/Program Files/nodejs/:/mnt/c/Program Files (x86)/Yarn/bin/:/mnt/c/ProgramData/nvm:/mnt/c/Program Files/nodejs:/mnt/c/Program Files (x86)/Intel/Intel(R) Management Engine Components/DAL:/mnt/c/Program Files/Intel/Intel(R) Management Engine Components/DAL:/mnt/c/Program Files (x86)/Intel/Intel(R) Management Engine Components/IPT:/mnt/c/Program Files/Intel/Intel(R) Management Engine Components/IPT:/mnt/c/Program Files/dotnet/:/mnt/c/Users/rasmu/AppData/Local/Microsoft/WindowsApps:/mnt/c/Program Files (x86)/SVP 4/mpv64:/mnt/c/Users/rasmu/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/tools/msys64:/mnt/c/Users/rasmu/AppData/Roaming/cabal/bin:/mnt/c/tools/ghc-9.0.1/bin:/mnt/c/Program Files/JetBrains/IntelliJ IDEA 2021.1.1/bin:/mnt/c/Users/rasmu/AppData/Roaming/npm:/mnt/c/Users/rasmu/AppData/Local/Yarn/bin:/mnt/c/Users/rasmu/AppData/Local/gitkraken/bin:/mnt/c/Users/rasmu/AppData/Local/atom/bin:/mnt/c/Users/rasmu/.dotnet/tools:/mnt/c/Users/rasmu/AppData/Local/GitHubDesktop/bin
 
 Yarn version: 
   1.22.5
@@ -14,7 +14,7 @@ Platform:
   linux x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/daisy-ui: Not found
+  Error: https://registry.yarnpkg.com/hero-icons-svelte: Not found
       at Request.params.callback [as _callback] (/mnt/c/Program Files (x86)/Yarn/lib/cli.js:66097:18)
       at Request.self.callback (/mnt/c/Program Files (x86)/Yarn/lib/cli.js:140749:22)
       at Request.emit (events.js:400:28)
@@ -40,17 +40,22 @@ npm manifest:
     "devDependencies": {
       "@sveltejs/vite-plugin-svelte": "^1.0.0-next.11",
       "@tsconfig/svelte": "^2.0.1",
+      "autoprefixer": "^10.3.7",
+      "cssnano": "^5.0.8",
+      "postcss": "^8.3.9",
+      "postcss-load-config": "^3.1.0",
       "svelte": "^3.37.0",
       "svelte-check": "^2.1.0",
       "svelte-preprocess": "^4.9.8",
+      "tailwindcss": "^2.2.16",
       "tslib": "^2.2.0",
       "typescript": "^4.3.2",
-      "vite": "^2.6.4",
-      "postcss": "^8.3.9",
-      "postcss-load-config": "^3.1.0",
-      "autoprefixer": "^10.3.7",
-      "cssnano": "^5.0.8",
-      "tailwindcss": "^2.2.16"
+      "vite": "^2.6.4"
+    },
+    "dependencies": {
+      "@tailwindcss/typography": "^0.4.1",
+      "daisyui": "^1.16.0",
+      "theme-change": "^2.0.2"
     }
   }
 
@@ -123,6 +128,16 @@ Lockfile:
       magic-string "^0.25.7"
       require-relative "^0.8.7"
       svelte-hmr "^0.14.7"
+  
+  "@tailwindcss/typography@^0.4.1":
+    version "0.4.1"
+    resolved "https://registry.yarnpkg.com/@tailwindcss/typography/-/typography-0.4.1.tgz#51ddbceea6a0ee9902c649dbe58871c81a831212"
+    integrity sha512-ovPPLUhs7zAIJfr0y1dbGlyCuPhpuv/jpBoFgqAc658DWGGrOBWBMpAWLw2KlzbNeVk4YBJMzue1ekvIbdw6XA==
+    dependencies:
+      lodash.castarray "^4.4.0"
+      lodash.isplainobject "^4.0.6"
+      lodash.merge "^4.6.2"
+      lodash.uniq "^4.5.0"
   
   "@trysound/sax@0.2.0":
     version "0.2.0"
@@ -505,6 +520,11 @@ Lockfile:
     integrity sha512-wvlcdIbf6pwKEk7vHj8/Bkc0B4ylXZruLvOgs9doS5eOsOpuodOV2zJChSpkp+pRpYQLQMeF04nr3Z68Sta9jA==
     dependencies:
       css-tree "^1.1.2"
+  
+  daisyui@^1.16.0:
+    version "1.16.0"
+    resolved "https://registry.yarnpkg.com/daisyui/-/daisyui-1.16.0.tgz#514a1ebbf48f89c473fefe5a78771e179e989c7d"
+    integrity sha512-/nVVnYqX7oxsIP68q2kOnOb48rbZLX2/smSrwzdSxF6olj8FCQ/90TU5J0gKvnWXOR6gyW8KuV8MQjwXE/oLYQ==
   
   debug@^4.3.2:
     version "4.3.2"
@@ -971,10 +991,25 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/lines-and-columns/-/lines-and-columns-1.1.6.tgz#1c00c743b433cd0a4e80758f7b64a57440d9ff00"
     integrity sha1-HADHQ7QzzQpOgHWPe2SldEDZ/wA=
   
+  lodash.castarray@^4.4.0:
+    version "4.4.0"
+    resolved "https://registry.yarnpkg.com/lodash.castarray/-/lodash.castarray-4.4.0.tgz#c02513515e309daddd4c24c60cfddcf5976d9115"
+    integrity sha1-wCUTUV4wna3dTCTGDP3c9ZdtkRU=
+  
+  lodash.isplainobject@^4.0.6:
+    version "4.0.6"
+    resolved "https://registry.yarnpkg.com/lodash.isplainobject/-/lodash.isplainobject-4.0.6.tgz#7c526a52d89b45c45cc690b88163be0497f550cb"
+    integrity sha1-fFJqUtibRcRcxpC4gWO+BJf1UMs=
+  
   lodash.memoize@^4.1.2:
     version "4.1.2"
     resolved "https://registry.yarnpkg.com/lodash.memoize/-/lodash.memoize-4.1.2.tgz#bcc6c49a42a2840ed997f323eada5ecd182e0bfe"
     integrity sha1-vMbEmkKihA7Zl/Mj6tpezRguC/4=
+  
+  lodash.merge@^4.6.2:
+    version "4.6.2"
+    resolved "https://registry.yarnpkg.com/lodash.merge/-/lodash.merge-4.6.2.tgz#558aa53b43b661e1925a0afdfa36a9a1085fe57a"
+    integrity sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==
   
   lodash.topath@^4.5.2:
     version "4.5.2"
@@ -1693,6 +1728,11 @@ Lockfile:
       reduce-css-calc "^2.1.8"
       resolve "^1.20.0"
       tmp "^0.2.1"
+  
+  theme-change@^2.0.2:
+    version "2.0.2"
+    resolved "https://registry.yarnpkg.com/theme-change/-/theme-change-2.0.2.tgz#142aa0669fde5ca7e625f5d3c09074ebb5bdb374"
+    integrity sha512-YvQqavf8nlGB3J7PdO0zLLhSLlgYhrqZL6By3FuzFIlWBsPTSPG/V98cHJllK3mmU97Jecei8XYiHalhy2umUw==
   
   timsort@^0.3.0:
     version "0.3.0"

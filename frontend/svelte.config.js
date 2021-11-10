@@ -6,6 +6,10 @@ export default {
   preprocess: [
     sveltePreprocess({
       postcss: true,
+
+      scss: {
+        prependData: '@import "src/variables.scss";',
+      },
     }),
   ],
 };
