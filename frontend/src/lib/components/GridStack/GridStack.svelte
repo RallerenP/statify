@@ -11,6 +11,16 @@
   export { klass as class };
   export let options: GridStackOptions = {};
   export let lock: boolean;
+  export function removeWidget(widget) {
+    if (grid)
+      grid.removeWidget(widget, true)
+  }
+
+  export function reset() {
+    if (!grid) return;
+    grid.destroy(false);
+    grid = GridStack.init(options);
+  }
 
   let grid;
 

@@ -2,8 +2,8 @@
     import ThemeSwitcher from "./ThemeSwitcher.svelte";
     import { getContext } from 'svelte';
     import type { Writable } from "svelte/store";
-
-    let edit = getContext<Writable<boolean>>('EDIT_MODE');
+    import { edit } from "../../stores/stores";
+    
 </script>
     
 <div class="navbar w-full border-b border-base-300 bg-base-200 text-neutral-content">

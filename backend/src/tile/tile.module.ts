@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
-import { TileService } from './tile.service';
-import { TileController } from './tile.controller';
+import { TileService } from './services/tile.service';
+import { TileController, StatTileController } from './tile.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Tile, TileSchema } from './schemas/tile.schema';
 import { StatTile, StatTileSchema } from './schemas/stat-tile.schema';
+import { StatTileService } from './services/stat-tile.service';
 
 @Module({
   imports: [
@@ -28,7 +29,7 @@ import { StatTile, StatTileSchema } from './schemas/stat-tile.schema';
       },
     ]),
   ],
-  controllers: [TileController],
-  providers: [TileService],
+  controllers: [TileController, StatTileController],
+  providers: [TileService, StatTileService],
 })
 export class TileModule {}

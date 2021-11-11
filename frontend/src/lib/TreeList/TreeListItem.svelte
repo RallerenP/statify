@@ -8,6 +8,8 @@
   import TreeListItem from './TreeListItem.svelte';
   import { getContext, createEventDispatcher } from 'svelte';
   import type { Writable } from 'svelte/store';
+  import { edit } from '../../stores/stores';
+  import router from 'page';
 
   const dispatch = createEventDispatcher();
 
@@ -17,8 +19,6 @@
   let deleteModalOpen = false;
   let deleteModalLoading = false;
 
-  let edit = getContext<Writable<boolean>>('EDIT_MODE');
-  
   let loading = false;
 
   const handleKeypress = async (e: KeyboardEvent) => {
@@ -75,7 +75,7 @@
     </div>
     
   {/if}
-  <div class="hover:bg-primary flex items-center p-2 mx-1 rounded w-full hover:text-primary-content transition-colors duration-200 cursor-pointer">
+  <div on:click={() => router(item.url)} class="hover:bg-primary flex items-center p-2 mx-1 rounded w-full hover:text-primary-content transition-colors duration-200 cursor-pointer">
     { item.label }
   </div>
   {#if $edit}

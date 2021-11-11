@@ -1,12 +1,13 @@
-import { TileService } from './tile.service';
+import { UpdateStatTileDTO } from './dtos/UpdateStatTileDTO';
+import { TileService } from './services/tile.service';
 import { CreateStatTileDTO } from './dtos/CreateTileDTO';
-import { Body, Controller, Get, Param, Post, Put, Req } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Req } from '@nestjs/common';
 import { Request } from 'express';
 import { UpdateTileDTO } from './dtos/UpdateTileDTO';
+import { StatTileService } from './services/stat-tile.service';
 
 @Controller('tile')
 export class TileController {
-
   constructor(private readonly tileService: TileService) {}
 
   @Post('/**/StatTile')
@@ -31,4 +32,18 @@ export class TileController {
     return this.tileService.update(id, updateTileDTO);
   }
 
+  @Delete('/:id')
+  deleteTile(@Param('id') id: string) {
+    return this.tileService.delete(id);
+  }
+}
+
+@Controller('tile/stat')
+export class StatTileController {
+  constructor(private readonly statTileService: StatTileService) {}
+
+  @Put('/:id')
+  updateStat(@Param('id') id: string, @Body() dto: UpdateStatTileDTO) {
+    return this.statTileService.update(id, dto);
+  }
 }

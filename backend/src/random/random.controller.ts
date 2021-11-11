@@ -12,6 +12,6 @@ export class RandomController {
 
   @Get('/array')
   getRandomArray() {
-    return this.randomService.getRandomArray()
+    return this.randomService.getRandomArray();
   }
 }

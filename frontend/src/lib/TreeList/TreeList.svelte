@@ -6,11 +6,11 @@
   import type { Writable } from "svelte/store";
   import Spinner from '../Spinner.svelte';
   import { fade } from 'svelte/transition'
+  import { edit } from "../../stores/stores";
 
   export let items: TreeListItemType[];
 
   let loading = false;
-  let edit = getContext<Writable<boolean>>('EDIT_MODE');
 
   const handleKeypress = async (e: KeyboardEvent) => {
     if (e.key !== "Enter") return;

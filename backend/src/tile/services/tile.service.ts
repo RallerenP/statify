@@ -1,10 +1,12 @@
-import { UpdateTileDTO } from './dtos/UpdateTileDTO';
-import { CreateStatTileDTO } from './dtos/CreateTileDTO';
+import { UpdateStatTileDTO } from '../dtos/UpdateStatTileDTO';
+import { UpdateTileDTO } from '../dtos/UpdateTileDTO';
+import { CreateStatTileDTO } from '../dtos/CreateTileDTO';
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Tile, TileDocument } from './schemas/tile.schema';
-import { StatTile } from './schemas/stat-tile.schema';
+import { Tile, TileDocument } from '../schemas/tile.schema';
+import { StatTile } from '../schemas/stat-tile.schema';
+import { StatTileService } from './stat-tile.service';
 
 @Injectable()
 export class TileService {
@@ -13,6 +15,7 @@ export class TileService {
     private readonly tileModel: Model<TileDocument>,
     @InjectModel(StatTile.name)
     private readonly statTileModel: Model<TileDocument>,
+    private readonly statTileService: StatTileService,
   ) {}
 
   async create(createTileDto: CreateStatTileDTO, url: string) {
@@ -57,5 +60,15 @@ export class TileService {
     found.height = height;
 
     return await found.save();
+  }
+
+  async delete(id: string) {
+    const found = await this.tileModel.findById(id);
+
+    if (!found) throw new HttpException('Tile not found', HttpStatus.NOT_FOUND);
+
+    await this.statTileService.delete(found.content);
+
+    await found.delete();
   }
 }
