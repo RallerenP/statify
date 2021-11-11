@@ -3,7 +3,7 @@
   import { getContext, onMount } from 'svelte';
   import type { Writable } from "svelte/store";
   import type { StatTileDTO } from "../../api/dtos/TileDTOs";
-import Spinner from "../../Spinner.svelte";
+  import Spinner from "../../Spinner.svelte";
   
   export let id;
   export let gridOptions: {w: number, h: number, x: number, y: number};
@@ -14,14 +14,9 @@ import Spinner from "../../Spinner.svelte";
   
   const edit = getContext<Writable<boolean>>('EDIT_MODE')
 
-  const lastMonthAmount = 5000  
-  const amount = Math.round(Math.random() * 10000)
-  const percentage = () => {
-      if (amount > lastMonthAmount) {
-          return Math.round(((amount / lastMonthAmount) * 100) - 100)
-      }
-      const decrease = lastMonthAmount - amount
-      return `😫`;
+  const lastMonthAmount = 5000
+  let percentage = () => {
+      return Math.round(((value / lastMonthAmount) * 100) - 100);
   }
 
   onMount(async () => {
@@ -38,7 +33,7 @@ import Spinner from "../../Spinner.svelte";
       {:else}
         <div class="stat-title">{content.label}</div> 
         <div class="stat-value">{value}</div> 
-        <div class="stat-desc">{percentage()}% {amount > 5000 ? 'more' : 'less'} than last month</div>
+        <div class="stat-desc"><span class={percentage() > 0 ? 'text-success' : 'text-error'}> {percentage()}% </span> {value > 5000 ? 'more' : 'less'} than last month</div>
       {/if}
     </div>
   </div>

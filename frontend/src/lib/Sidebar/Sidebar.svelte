@@ -1,9 +1,8 @@
 <script lang="ts">
     import { onMount } from 'svelte';
     import { getAllMenus } from "../api/api";
-import Spinner from '../Spinner.svelte';
+    import Spinner from '../Spinner.svelte';
     import TreeList from "../TreeList/TreeList.svelte";
-    import type { TreeListItem } from "../TreeList/TreeListItem";
 
     let tree;
 

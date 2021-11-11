@@ -7,6 +7,7 @@
   import Spinner from "./Spinner.svelte";
   import { getTiles, updateTile } from "./api/api";
   import type { TileDTO } from "./api/dtos/TileDTOs";
+import ChartTile from "./components/tiles/ChartTile.svelte";
 
   let edit = getContext<Writable<boolean>>('EDIT_MODE');
   let loading = true;
@@ -27,6 +28,7 @@
 
   onMount(async () => {
     tiles = await getTiles('/super-ny-menu-punkt');
+    console.log(tiles)
     loading = false;
   })
 </script>
@@ -38,11 +40,19 @@
     <GridStack lock={!$edit} on:change={handleChange}>
 
       {#each tiles as tile}
-        <StatTile 
-          id={tile._id} 
-          gridOptions={{w: tile.width, h: tile.height, x: tile.x, y: tile.y}}
-          content={tile.content}
-        />
+        {#if !tile.content.source.includes('array')}
+          <StatTile 
+            id={tile._id} 
+            gridOptions={{w: tile.width, h: tile.height, x: tile.x, y: tile.y}}
+            content={tile.content}
+          />
+        {:else}
+          <ChartTile 
+            id={tile._id} 
+            gridOptions={{w: tile.width, h: tile.height, x: tile.x, y: tile.y}}
+            content={tile.content}
+          />
+        {/if}
       {/each}
       
     </GridStack>

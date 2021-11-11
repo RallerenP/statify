@@ -2,7 +2,7 @@ import { HttpService } from '@nestjs/axios';
 import { SubscriptionClient } from '@azure/arm-subscriptions';
 import { ClientSecretCredential } from '@azure/identity';
 import { Injectable } from '@nestjs/common';
-import azure_creds from '../secrets.js';
+import azure_creds from '../secrets';
 import {
   AzureServiceClient,
   loginWithServicePrincipalSecret,

@@ -9,4 +9,9 @@ export class RandomController {
   getRandom() {
     return this.randomService.getRandom();
   }
+
+  @Get('/array')
+  getRandomArray() {
+    return this.randomService.getRandomArray()
+  }
 }
