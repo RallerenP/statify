@@ -6,7 +6,7 @@
   import StatTile from "./components/tiles/StatTile.svelte";
   import Spinner from "./Spinner.svelte";
   import { deleteTile, getTiles, updateTile } from "./api/api";
-  import type { TileDTO } from "./api/dtos/TileDTOs";
+  import type { StatTileDTO, TileDTO } from "./api/dtos/TileDTOs";
   import ChartTile from "./components/tiles/ChartTile.svelte";
   import { edit, url } from '../stores/stores';
 
@@ -32,6 +32,72 @@
     //await update();
   }
 
+  let deleteModalOpen = false;
+  let selectedTileOption = ''
+  let tileSizeX = 1
+  let tileSizeY = 1
+  let tileType = 'StatTile'
+  let tileLabel = 'Editor Test'
+
+  let previewContent: StatTileDTO = {
+    _id: '-1',
+    source: 'http://localhost:3000/random',
+    label: tileLabel
+  }
+
+  const tileSizeOptions = [
+    {
+      id: 0,
+      x: 1,
+      y: 1
+    },
+    {
+      id: 1,
+      x: 2,
+      y: 1
+    },
+    {
+      id: 2,
+      x: 1,
+      y: 2
+    },
+  ]
+
+  const tileTypes = [
+    'StatTile',
+    'ChartTile'
+  ]
+
+  const handleTileStyleClicked = (option) => {
+    selectedTileOption = option
+  }
+
+  const handleKeypress = (e) => {
+    if (e.key !== "Enter") return;
+
+    const value = (e.target as HTMLInputElement).value;
+    
+    tileLabel = value
+
+    selectedTileOption = ''
+  }
+
+  const handleClickedTileSize = (e) => {
+    const id = Number(e.target.id)
+    const found = tileSizeOptions.filter( elem => { return id === elem.id })
+    
+    tileSizeX = found[0].x
+    tileSizeY = found[0].y
+
+    selectedTileOption = ''
+  }
+
+  const handleChangedTileType = (e) => {
+    tileType = e.target.id
+
+    selectedTileOption = ''
+  }
+
   onMount(async () => {
     update();
   })
@@ -49,7 +115,9 @@
     update();  
   }
 
-
+  $: if (tileLabel) {
+    previewContent.label = tileLabel
+  }
 
 </script>
 
@@ -65,6 +133,70 @@
       
       
     {:else}
+      {#if $edit}
+        <div id="my-modal" class="modal { deleteModalOpen ? 'modal-open' : '' }">
+          <div class="modal-box">
+            <h1 class="text-2xl mb-2">Tile Editor</h1>
+
+            {#if !selectedTileOption}
+            <!--Left side-->
+            <div class="flex">
+              <div class="max-w-{50}">
+                <p class="text-lg">Current tile data</p>
+                <p class="text-sm">Tile Size: <span class="text-primary">{tileSizeX} x {tileSizeY}</span></p>
+                <p class="text-sm">Tile Type: <span class="text-primary">{tileType}</span></p>
+                <p class="text-sm">Tile Label: <span class="text-primary">{tileLabel}</span></p>
+              </div>
+              <div class="flex-grow"></div>
+              <!--Preview-->
+              <div class="w-6/12">
+                <p>Preview</p>
+                <StatTile
+                id={previewContent._id} 
+                gridOptions={{w: tileSizeX, h: tileSizeY, x: 0, y: 0}}
+                content={previewContent}
+                />
+              </div>
+            </div>
+            <!--Tile options-->
+            <div class="flex mt-10">
+              <div class="w-1/3 p-4"><img class="hover:border-primary hover:border-2 hover:cursor-pointer" src="./src/assets/TileSize.png" alt="" on:click={() => handleTileStyleClicked('size')}></div>
+              <div class="w-1/3 p-4"><img class="hover:border-primary hover:border-2 hover:cursor-pointer" src="./src/assets/TileStyle.png" alt="" on:click={() => handleTileStyleClicked('type')}></div>
+              <div class="w-1/3 p-4"><img class="hover:border-primary hover:border-2 hover:cursor-pointer" src="./src/assets/TileLabel.png" alt="" on:click={() => handleTileStyleClicked('label')}></div>
+            </div>
+            <div class="modal-action">
+              <div class="btn" on:click={() => deleteModalOpen = false}>Close</div>
+            </div>
+
+            {:else}
+            <!--If styling tile-->
+            <p class="text-lg">Editing tile {selectedTileOption}</p>
+            {#if selectedTileOption === 'size'}
+              <div>
+                <ul>
+                {#each tileSizeOptions as tileSizeOption}
+                  <li><button id={`${tileSizeOption.id}`} class="hover:bg-primary rounded" on:click={ (e) => handleClickedTileSize(e)}>{tileSizeOption.x} - {tileSizeOption.y}</button></li>
+                {/each}
+                </ul>
+              </div>
+            {:else if selectedTileOption === 'type'}
+              <div>
+                <ul>
+                  {#each tileTypes as types}
+                    <li><button id={`${types}`} class="hover:bg-primary rounded" on:click={ (e) => handleChangedTileType(e)}>- {types}</button></li>
+                  {/each}
+                </ul>
+              </div>
+            {:else}
+              <div><input on:keypress="{(e) => handleKeypress(e)}" class="p-2 mx-1 rounded w-full input input-ghost" placeholder="New label for tile..."></div>
+            {/if}
+            <div class="btn btn-error mt-6" on:click={() => handleTileStyleClicked('')}>Back</div>
+
+            {/if}
+
+          </div>
+        </div>
+      {/if}
       <GridStack bind:this={gridstack} lock={!$edit} on:change={handleChange}>
         
         {#each tiles as tile}
@@ -85,6 +217,12 @@
         {/each}
         
       </GridStack>
+    {/if}
+    {#if $edit}
+    <div class="flex">
+      <div class="flex-grow"></div>
+      <div class="text-4xl bg-ghost rounded w-[40px] mr-20 hover:cursor-pointer text-center" on:click={ () => deleteModalOpen = true }>+</div>
+    </div>
     {/if}
   {/if}
   
