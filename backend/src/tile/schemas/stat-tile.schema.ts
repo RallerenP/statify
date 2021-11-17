@@ -1,3 +1,4 @@
+import { Tile, TileDocument, TileSchema } from './tile.schema';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Mongoose, RefType, Types } from 'mongoose';
 
@@ -23,6 +24,13 @@ export class StatTile {
 
   @Prop({ required: true })
   source: string;
+
+  @Prop({
+    type: Types.ObjectId,
+    ref: 'Tile',
+    autopopulate: true,
+  })
+  parent: TileDocument;
 }
 
 export const StatTileSchema = SchemaFactory.createForClass(StatTile);

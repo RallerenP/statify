@@ -1,49 +1,29 @@
-import { UpdateStatTileDTO } from './dtos/UpdateStatTileDTO';
 import { TileService } from './services/tile.service';
-import { CreateStatTileDTO } from './dtos/CreateTileDTO';
-import { Body, Controller, Delete, Get, Param, Post, Put, Req } from '@nestjs/common';
-import { Request } from 'express';
-import { UpdateTileDTO } from './dtos/UpdateTileDTO';
-import { StatTileService } from './services/stat-tile.service';
+import { Controller, Delete, Get, Param, Body, Put } from '@nestjs/common';
+import { UpdateTileDTO } from './dtos/update-tile.dto';
+import { Tile } from './schemas/tile.schema';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('tile')
+@ApiTags('Tiles')
 export class TileController {
   constructor(private readonly tileService: TileService) {}
-
-  @Post('/**/StatTile')
-  createTile(
-    @Body() createTileDto: CreateStatTileDTO,
-    @Req() request: Request,
-  ) {
-    const url = request.url.substring(5, request.url.length - 9);
-
-    return this.tileService.create(createTileDto, url);
+  /**
+   * Get all related tiles for an url
+   */
+  @Get('/:url(*)')
+  getTiles(@Param('url') url: string): Promise<Tile[]> {
+    return this.tileService.getAll(`/${url}`);
   }
 
-  @Get('/*')
-  getTiles(@Req() request: Request) {
-    const url = request.url.substring(5);
-
-    return this.tileService.getAll(url);
-  }
-
+  /**
+   * Update an already existing tile
+   */
   @Put('/:id')
-  updateTile(@Param('id') id: string, @Body() updateTileDTO: UpdateTileDTO) {
+  updateTile(
+    @Param('id') id: string,
+    @Body() updateTileDTO: UpdateTileDTO,
+  ): Promise<Tile> {
     return this.tileService.update(id, updateTileDTO);
-  }
-
-  @Delete('/:id')
-  deleteTile(@Param('id') id: string) {
-    return this.tileService.delete(id);
-  }
-}
-
-@Controller('tile/stat')
-export class StatTileController {
-  constructor(private readonly statTileService: StatTileService) {}
-
-  @Put('/:id')
-  updateStat(@Param('id') id: string, @Body() dto: UpdateStatTileDTO) {
-    return this.statTileService.update(id, dto);
   }
 }

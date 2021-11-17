@@ -1,39 +1,35 @@
-import { CreateMenuItemDto } from './dtos/CreateMenuDto';
-import { Body, Controller, Delete, Get, Post, Req } from '@nestjs/common';
+import { CreateMenuItemDto } from './dtos/create-menu-item.dto';
+import { Body, Controller, Delete, Get, Param, Post, Req } from '@nestjs/common';
 import { MenuService } from './menu.service';
 import { Request } from 'express';
+import { ApiTags } from '@nestjs/swagger';
+import { MenuItem } from './schemas/menu-item.schema';
 
 @Controller('menu')
+@ApiTags('Menu')
 export class MenuController {
   constructor(private readonly menuService: MenuService) {}
 
   @Get()
-  getMenuItems() {
+  getMenuItems(): Promise<MenuItem[]> {
     return this.menuService.getAll();
   }
 
-  @Get('/*')
-  getMenu(@Req() request: Request) {
-    const url = request.url.substring(5);
-
-    return this.menuService.getOne(url);
+  @Get('/:url(*)')
+  getMenu(@Param('url') url: string) {
+    return this.menuService.getOne(`/${url}`);
   }
 
-  @Post('/*')
+  @Post('/:url(*)')
   createMenuItem(
     @Body() createMenuItemDto: CreateMenuItemDto,
-    @Req() request: Request,
+    @Param('url') url: string,
   ) {
-    // URL /cool-menuitem/asdfg/
-    const url = request.url.substring(5);
-
-    return this.menuService.create(createMenuItemDto, url);
+    return this.menuService.create(createMenuItemDto, `/${url}`);
   }
 
-  @Delete('/*')
-  deleteMenuItems(@Req() request: Request) {
-    const url = request.url.substring(5);
-
-    return this.menuService.delete(url);
+  @Delete('/:url(*)')
+  deleteMenuItems(@Param('url') url: string) {
+    return this.menuService.delete(`/${url}`);
   }
 }

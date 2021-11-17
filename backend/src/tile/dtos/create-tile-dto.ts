@@ -1,12 +1,6 @@
 import { IsNotEmpty } from 'class-validator';
 
-export class CreateStatTileDTO {
-  @IsNotEmpty()
-  label: string;
-
-  @IsNotEmpty()
-  source: string;
-
+export class CreateTileDTO {
   @IsNotEmpty()
   width: number;
 
@@ -21,7 +15,4 @@ export class CreateStatTileDTO {
 
   @IsNotEmpty()
   type: string;
-
-  // content_id: string;
 }
-

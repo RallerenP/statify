@@ -1,32 +1,33 @@
-import { UpdateStatTileDTO } from '../dtos/UpdateStatTileDTO';
-import { UpdateTileDTO } from '../dtos/UpdateTileDTO';
-import { CreateStatTileDTO } from '../dtos/CreateTileDTO';
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import { UpdateTileDTO } from '../dtos/update-tile.dto';
+import {
+  Injectable,
+  HttpException,
+  HttpStatus,
+  forwardRef,
+  Inject,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Tile, TileDocument } from '../schemas/tile.schema';
 import { StatTile } from '../schemas/stat-tile.schema';
-import { StatTileService } from './stat-tile.service';
+import { StatTileService } from '../../stat-tile/stat-tile.service';
+import { CreateTileDTO } from '../dtos/create-tile-dto';
 
 @Injectable()
 export class TileService {
   constructor(
     @InjectModel(Tile.name)
     private readonly tileModel: Model<TileDocument>,
-    @InjectModel(StatTile.name)
-    private readonly statTileModel: Model<TileDocument>,
+    @Inject(forwardRef(() => StatTileService))
     private readonly statTileService: StatTileService,
   ) {}
 
-  async create(createTileDto: CreateStatTileDTO, url: string) {
-    const { label, width, height, x, y, type, source } = createTileDto;
-
-    const stat = new this.statTileModel({
-      label,
-      source,
-    });
-
-    await stat.save();
+  async create(
+    url: string,
+    createTileDto: CreateTileDTO,
+    content: { _id: string },
+  ) {
+    const { width, height, x, y, type } = createTileDto;
 
     const created = new this.tileModel({
       url,
@@ -35,7 +36,7 @@ export class TileService {
       x,
       y,
       type,
-      content: stat._id,
+      content: content._id,
     });
 
     await created.save();
@@ -66,8 +67,6 @@ export class TileService {
     const found = await this.tileModel.findById(id);
 
     if (!found) throw new HttpException('Tile not found', HttpStatus.NOT_FOUND);
-
-    await this.statTileService.delete(found.content);
 
     await found.delete();
   }

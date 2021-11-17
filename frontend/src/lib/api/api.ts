@@ -41,14 +41,14 @@ export const updateTile = async (id: string, dto: UpdateTileDTO) => {
   }).then(res => res.json());
 }
 
-export const deleteTile = async (id: string) => {
-  return fetch(`${base}/tile/${id}`, {
+export const deleteStat = async (id: string) => {
+  return fetch(`${base}/stat-tile/${id}`, {
     method: 'DELETE'
   })
 }
 
 export const updateStat = async (id: string, dto: Partial<StatTileDTO>) => {
-  return fetch(`${base}/tile/stat/${id}`, {
+  return fetch(`${base}/stat-tile/${id}`, {
     method: 'PUT',
     body: JSON.stringify(dto),
     headers: {

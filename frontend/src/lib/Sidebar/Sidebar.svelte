@@ -11,7 +11,7 @@
     })
 </script>
 
-<div class="flex flex-col border-r bg-base-200 border-base-300 w-[300px] p-2 relative">
+<div class="flex flex-col border-r bg-base-200 border-base-300 w-[300px] flex-shrink-0 p-2 relative">
     {#if !tree}
         <div class="flex w-full h-full justify-center items-center">
             <Spinner class="w-8 h-8"></Spinner>

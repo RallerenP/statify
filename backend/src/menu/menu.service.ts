@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { CreateMenuItemDto } from './dtos/CreateMenuDto';
+import { CreateMenuItemDto } from './dtos/create-menu-item.dto';
 import { MenuItemDocument, MenuItem } from './schemas/menu-item.schema';
 
 @Injectable()
