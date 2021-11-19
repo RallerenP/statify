@@ -1,4 +1,4 @@
-import type { StatTileDTO, UpdateTileDTO } from './dtos/TileDTOs';
+import type { CreateStatTileDTO, StatTileDTO, UpdateTileDTO } from './dtos/TileDTOs';
 import type { CreateMenuItemDTO } from "./dtos/MenuDTOs";
 
 const base = "http://localhost:3000";
@@ -57,3 +57,15 @@ export const updateStat = async (id: string, dto: Partial<StatTileDTO>) => {
     },
   }).then(res => res.json());
 }
+
+export const createStat = async (url: string, dto: CreateStatTileDTO) => {
+  return fetch(`${base}/stat-tile${url}`, {
+    method: 'POST',
+    body: JSON.stringify(dto),
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+  }).then(res => res.json());
+}
+

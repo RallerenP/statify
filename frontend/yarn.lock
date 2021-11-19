@@ -52,6 +52,18 @@
     estree-walker "^2.0.1"
     picomatch "^2.2.2"
 
+"@splidejs/splide@^3.5.8":
+  version "3.5.8"
+  resolved "https://registry.yarnpkg.com/@splidejs/splide/-/splide-3.5.8.tgz#b1db27c56841a05cd5405ad30dc9671ff96710ea"
+  integrity sha512-/jkXAy+ayD8imvQDaeQUFvTVW2YyXFXlHNQBsjJPPxlYO67ZsL8JKwJIIPpkdsnBKsBkMwMfHtQg+dl8LvDtXQ==
+
+"@splidejs/svelte-splide@^0.1.12":
+  version "0.1.12"
+  resolved "https://registry.yarnpkg.com/@splidejs/svelte-splide/-/svelte-splide-0.1.12.tgz#c4413afb1f620038f7ecfc1842656dc0a4740a84"
+  integrity sha512-nbHRj0NTRz4xgJGWQPoT7c2RI6Kv+qX1wSFbQbUh3oymAlUCq/rkFTooW4R9uIQYf6KKkkmGfeySvdaqKUgBcg==
+  dependencies:
+    "@splidejs/splide" "^3.5.8"
+
 "@sveltejs/vite-plugin-svelte@^1.0.0-next.11":
   version "1.0.0-next.30"
   resolved "https://registry.npmjs.org/@sveltejs/vite-plugin-svelte/-/vite-plugin-svelte-1.0.0-next.30.tgz"

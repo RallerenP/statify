@@ -20,7 +20,7 @@
 
   const lastMonthAmount = 5000
   let percentage = () => {
-      return Math.round(((value / lastMonthAmount) * 100) - 100);
+      return Math.round(((value.value / lastMonthAmount) * 100) - 100);
   }
 
   onMount(async () => {
@@ -45,8 +45,8 @@
   }
 </script>
 
-<GridStackItem bind:this={item} {id} class="max-h-full " width={gridOptions.w} height={gridOptions.h} x={gridOptions.x} y={gridOptions.y} >
-  <div class="stats h-full w-full ">
+<GridStackItem bind:this={item} {id} class="max-h-full overflow-x-hidden" width={gridOptions.w} height={gridOptions.h} x={gridOptions.x} y={gridOptions.y} >
+  <div class="stats h-full w-full overflow-x-hidden">
     <div class="stat bg-base-200 {$edit && 'transition-colors hover:bg-base-300 cursor-pointer' }">
       {#if loading}
         <Spinner />
@@ -72,11 +72,19 @@
           </label>
           
         {:else}
-          <div class="stat-title">{content.label}</div> 
+          <div class="flex items-center">
+            <div class="stat-title flex-grow flex items-center">{content.label}</div>
+            <button title="{value.description}" class="tooltip z-10000 h-6 w-6">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </button>
+          </div>
+          
         {/if}
         
-        <div class="stat-value">{value}</div> 
-        <div class="stat-desc"><span class={percentage() > 0 ? 'text-success' : 'text-error'}> {percentage()}% </span> {value > 5000 ? 'more' : 'less'} than last month</div>
+        <div class="stat-value">{value.value}</div> 
+        <div class="stat-desc"><span class={percentage() > 0 ? 'text-success' : 'text-error'}> {percentage()}% </span> {value.value > 5000 ? 'more' : 'less'} than last month</div>
       {/if}
     </div>
   </div>

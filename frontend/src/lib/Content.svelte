@@ -59,7 +59,7 @@
       </div>
     {:else}
       {#if $edit}
-        <TileEditor bind:open={deleteModalOpen}/>
+        <TileEditor on:created={() => update()} bind:open={deleteModalOpen}/>
       {/if}
       <GridStack bind:this={gridstack} lock={!$edit} on:change={handleChange}>
         

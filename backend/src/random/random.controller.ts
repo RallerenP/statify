@@ -11,15 +11,21 @@ export class RandomController {
    * Get a random number
    */
   @Get()
-  getRandom(): number {
-    return this.randomService.getRandom();
+  getRandom() {
+    return {
+      value: this.randomService.getRandom(),
+      description: 'A random number',
+    };
   }
 
   /**
    * Get 5 random numbers
    */
   @Get('/array')
-  getRandomArray(): number[] {
-    return this.randomService.getRandomArray();
+  getRandomArray() {
+    return {
+      value: this.randomService.getRandomArray(),
+      description: 'An array of random numbers',
+    };
   }
 }
