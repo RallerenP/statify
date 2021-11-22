@@ -9,7 +9,6 @@
   import { url } from '../../../../stores/stores';
   import { createStat } from "../../../api/api";
   import { createEventDispatcher, onMount } from 'svelte';
-  import SliderSlide from "./SliderSlide.svelte";
 
   let dispatch = createEventDispatcher();
 
@@ -83,7 +82,7 @@
           <span class="text-[18px] mb-2">Preview</span>
           <div class="flex-grow"></div>
         </div>
-        <TilePreview {value} {tileType} {title} {dataSource} {data_3}></TilePreview>
+        <TilePreview {value} {tileType} {title}></TilePreview>
       </div>
     </div>
   </div>
@@ -92,32 +91,12 @@
     <Splide options={options} bind:splide>
       <SplideSlide class="flex-center splide__slide is-active is-visible">
         <div class="w-full h-full p-8">
-          <SliderSlide value={5000} tileType='Stat'/>
+          <TilePreview title='Stat' tileType='Stat' value=5000/>
         </div>
       </SplideSlide>
       <SplideSlide class="flex-center splide__slide is-active is-visible">
         <div class="w-full h-full p-8">
-          <SliderSlide value={[2, 5, 7]} tileType='Piechart'/>
-        </div>
-      </SplideSlide>
-      <SplideSlide class="flex-center splide__slide is-active is-visible">
-        <div class="w-full h-full p-8">
-          <SliderSlide value={5000} tileType='Stat'/>
-        </div>
-      </SplideSlide>
-      <SplideSlide class="flex-center splide__slide is-active is-visible">
-        <div class="w-full h-full p-8">
-          <SliderSlide value={[2, 5, 7]} tileType='Piechart'/>
-        </div>
-      </SplideSlide>
-      <SplideSlide class="flex-center splide__slide is-active is-visible">
-        <div class="w-full h-full p-8">
-          <SliderSlide value={5000} tileType='Stat'/>
-        </div>
-      </SplideSlide>
-      <SplideSlide class="flex-center splide__slide is-active is-visible">
-        <div class="w-full h-full p-8">
-          <SliderSlide value={[2, 5, 7]} tileType='Piechart'/>
+          <TilePreview title='Piechart' tileType='Piechart' value={[2, 5, 7]}/>
         </div>
       </SplideSlide>
     </Splide>
