@@ -3,27 +3,45 @@
   import ModalButton from "../../Modal/ModalButton.svelte";
   import ModalTitle from "../../Modal/ModalTitle.svelte";
   import InputField from "./InputField.svelte";
-  import TilePreview from "./TilePreview.svelte";
+  import TilePreview from "./previews/TilePreview.svelte";
   import { Splide, SplideSlide, Options } from '@splidejs/svelte-splide';
   import '@splidejs/splide/dist/css/splide.min.css';
-  import StatTile from "../StatTile.svelte";
   import { url } from '../../../../stores/stores';
   import { createStat } from "../../../api/api";
-  import { createEventDispatcher } from 'svelte';
+  import { createEventDispatcher, onMount } from 'svelte';
+  import SliderSlide from "./SliderSlide.svelte";
 
   let dispatch = createEventDispatcher();
 
   let title = 'default'
   let dataSource = 'http://localhost:3000/random'
   let data_3 = 'Something'
+  let value = 5000
+  let tileType = 'Stat'
   export let open;
   export let update = false;
+  let splide
+
+  
+
+  onMount(async () => {
+    splide.on('click', (e) => {
+      // e.slide.children[0].children[0].children[0].children[0].textContent
+      // e.slide.children[0].children[0].id
+      value = e.slide.children[0].children[0].id
+      tileType = e.slide.children[0].children[0].children[0].children[0].textContent
+    })
+  })
 
   const options: Options = {
     rewind : true,
     perPage: 3,
     gap    : '1rem',
     height : '15rem',
+    padding : {
+      left : '2.5%',
+      right : '2.5%'
+    },
     breakpoints: {
       1000: {
         perPage: 1,
@@ -65,17 +83,41 @@
           <span class="text-[18px] mb-2">Preview</span>
           <div class="flex-grow"></div>
         </div>
-        
-        <TilePreview {title} {dataSource} {data_3}></TilePreview>
+        <TilePreview {value} {tileType} {title} {dataSource} {data_3}></TilePreview>
       </div>
     </div>
   </div>
-  <div class="my-2">
+  <div class="mt-16">
     <span class="text-[18px]">Tile Selector</span>
-    <Splide options={options}>
+    <Splide options={options} bind:splide>
       <SplideSlide class="flex-center splide__slide is-active is-visible">
         <div class="w-full h-full p-8">
-          <TilePreview {title} {dataSource} {data_3} />
+          <SliderSlide value={5000} tileType='Stat'/>
+        </div>
+      </SplideSlide>
+      <SplideSlide class="flex-center splide__slide is-active is-visible">
+        <div class="w-full h-full p-8">
+          <SliderSlide value={[2, 5, 7]} tileType='Piechart'/>
+        </div>
+      </SplideSlide>
+      <SplideSlide class="flex-center splide__slide is-active is-visible">
+        <div class="w-full h-full p-8">
+          <SliderSlide value={5000} tileType='Stat'/>
+        </div>
+      </SplideSlide>
+      <SplideSlide class="flex-center splide__slide is-active is-visible">
+        <div class="w-full h-full p-8">
+          <SliderSlide value={[2, 5, 7]} tileType='Piechart'/>
+        </div>
+      </SplideSlide>
+      <SplideSlide class="flex-center splide__slide is-active is-visible">
+        <div class="w-full h-full p-8">
+          <SliderSlide value={5000} tileType='Stat'/>
+        </div>
+      </SplideSlide>
+      <SplideSlide class="flex-center splide__slide is-active is-visible">
+        <div class="w-full h-full p-8">
+          <SliderSlide value={[2, 5, 7]} tileType='Piechart'/>
         </div>
       </SplideSlide>
     </Splide>
