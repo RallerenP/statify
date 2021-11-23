@@ -9,28 +9,26 @@
   import { url } from '../../../../stores/stores';
   import { createStat } from "../../../api/api";
   import { createEventDispatcher, onMount } from 'svelte';
+  import { get } from "svelte/store";
 
   let dispatch = createEventDispatcher();
 
   let title = 'default'
   let dataSource = 'http://localhost:3000/random'
   let data_3 = 'Something'
-  let value = 5000
+  let value: any = 5000
   let tileType = 'Stat'
   export let open;
   export let update = false;
   let splide
 
-  
+  const handleDataSourceChange = (e: KeyboardEvent) => {
+    if (e.key === "Enter") get();
+  }
 
-  onMount(async () => {
-    splide.on('click', (e) => {
-      // e.slide.children[0].children[0].children[0].children[0].textContent
-      // e.slide.children[0].children[0].id
-      value = e.slide.children[0].children[0].id
-      tileType = e.slide.children[0].children[0].children[0].children[0].textContent
-    })
-  })
+  async function get() {
+    value = (await fetch(dataSource).then(res => res.json())).value;
+  }
 
   const options: Options = {
     rewind : true,
@@ -63,6 +61,14 @@
     open = false;
   }
 
+
+  const handleTileTypeSelect = (type, _value) => {
+    if (tileType !== type) {
+      tileType = type;
+      value = _value;
+    } 
+    
+  }
 </script>
 
 <Modal class="max-w-[1200px]" {open}>
@@ -73,7 +79,7 @@
         <span class="text-[18px]">Settings</span>
         <div class="form-control mt-2">
           <InputField bind:value={title}>Title</InputField>
-          <InputField class="my-4" bind:value={dataSource}>Data Source</InputField>
+          <InputField class="my-4" on:keydown={handleDataSourceChange} bind:value={dataSource}>Data Source</InputField>
           <InputField bind:value={data_3}>Data 3</InputField>
         </div> 
       </div>
@@ -82,21 +88,21 @@
           <span class="text-[18px] mb-2">Preview</span>
           <div class="flex-grow"></div>
         </div>
-        <TilePreview {value} {tileType} {title}></TilePreview>
+        <TilePreview value={value} {tileType} {title}></TilePreview>
       </div>
     </div>
   </div>
   <div class="mt-16">
     <span class="text-[18px]">Tile Selector</span>
-    <Splide options={options} bind:splide>
+    <Splide options={options}>
       <SplideSlide class="flex-center splide__slide is-active is-visible">
         <div class="w-full h-full p-8">
-          <TilePreview title='Stat' tileType='Stat' value=5000/>
+          <TilePreview on:click={() => handleTileTypeSelect('Stat', 5000) } title='Stat' tileType='Stat' value=5000/>
         </div>
       </SplideSlide>
       <SplideSlide class="flex-center splide__slide is-active is-visible">
         <div class="w-full h-full p-8">
-          <TilePreview title='Piechart' tileType='Piechart' value={[2, 5, 7]}/>
+          <TilePreview on:click={() => handleTileTypeSelect('Piechart', [5, 7, 3]) } title='Piechart' tileType='Piechart' value={[2, 5, 7]}/>
         </div>
       </SplideSlide>
     </Splide>

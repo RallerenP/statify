@@ -13,6 +13,11 @@ export interface StatTileDTO extends TileDTO {
   label: string
 }
 
+export interface PieChartDTO {
+  labels: any[]
+  data: []
+}
+
 export interface UpdateTileDTO {
   width: number;
   height: number;
