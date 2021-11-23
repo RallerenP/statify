@@ -31,6 +31,8 @@
     },
   }
 
+  $: console.log(open)
+
   const handleCreate = async () => {
     await createStat($url, {
       label: title,
