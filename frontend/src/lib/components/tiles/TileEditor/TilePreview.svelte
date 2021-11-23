@@ -31,7 +31,7 @@ import { onMount } from "svelte";
             <Spinner/>
         {:else}
             <div class="stat-title">{title}</div>
-            <div class="stat-value">{value}</div> 
+            <div class="stat-value">{value.value}</div> 
             <div class="stat-desc"><span class='text-success'> 50% </span> more than last month</div>
         {/if}
     </div>
