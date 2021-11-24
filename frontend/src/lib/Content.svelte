@@ -4,7 +4,7 @@
   import StatTile from "./components/tiles/StatTile.svelte";
   import Spinner from "./Spinner.svelte";
   import { getTiles, updateTile } from "./api/api";
-  import type { StatTileDTO, TileDTO } from "./api/dtos/TileDTOs";
+  import type { TileDTO } from "./api/dtos/TileDTOs";
   import ChartTile from "./components/tiles/ChartTile.svelte";
   import { edit, url } from '../stores/stores';
   import TileEditor from "./components/tiles/TileEditor/TileEditor.svelte";

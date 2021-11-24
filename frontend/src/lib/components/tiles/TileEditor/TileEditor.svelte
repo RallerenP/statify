@@ -8,8 +8,8 @@
   import '@splidejs/splide/dist/css/splide.min.css';
   import { url } from '../../../../stores/stores';
   import { createStat } from "../../../api/api";
-  import { createEventDispatcher, onMount } from 'svelte';
-  import { get } from "svelte/store";
+  import { createEventDispatcher } from 'svelte';
+import { dataset_dev } from "svelte/internal";
 
   let dispatch = createEventDispatcher();
 
@@ -20,7 +20,6 @@
   let tileType = 'Stat'
   export let open;
   export let update = false;
-  let splide
 
   const handleDataSourceChange = (e: KeyboardEvent) => {
     if (e.key === "Enter") get();
@@ -47,6 +46,7 @@
   }
 
   const handleCreate = async () => {
+    console.log(title, dataSource, tileType)
     await createStat($url, {
       label: title,
       source: dataSource,

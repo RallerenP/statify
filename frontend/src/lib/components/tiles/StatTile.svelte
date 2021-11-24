@@ -1,7 +1,6 @@
 <script lang="ts">
   import GridStackItem from "../GridStack/GridStackItem.svelte";
-  import { getContext, onMount, createEventDispatcher } from 'svelte';
-  import type { Writable } from "svelte/store";
+  import { onMount, createEventDispatcher } from 'svelte';
   import type { StatTileDTO } from "../../api/dtos/TileDTOs";
   import Spinner from "../../Spinner.svelte";
   import { edit } from "../../../stores/stores";
