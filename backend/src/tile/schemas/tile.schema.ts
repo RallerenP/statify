@@ -15,7 +15,14 @@ export type TileDocument = Tile & Document;
 //   'DIVIDER',
 // ];
 
-const TileTypes = [StatTile.name];
+const TileTypes = [
+  'Number',
+  'PieChart',
+  'BarChart',
+  'LineChart',
+  'ScatterChart',
+  'OnOff',
+];
 
 @Schema()
 export class Tile {
@@ -38,7 +45,10 @@ export class Tile {
   type: string;
 
   @Prop({ refPath: 'type', type: Types.ObjectId })
-  content: string;
+  content: {
+    label: string;
+    dataSource: string;
+  };
 }
 
 export const TileSchema = SchemaFactory.createForClass(Tile);

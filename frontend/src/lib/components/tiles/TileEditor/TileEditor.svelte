@@ -7,9 +7,10 @@
   import { Splide, SplideSlide, Options } from '@splidejs/svelte-splide';
   import '@splidejs/splide/dist/css/splide.min.css';
   import { url } from '../../../../stores/stores';
-  import { createStat } from "../../../api/api";
   import { createEventDispatcher, onMount } from 'svelte';
   import { get } from "svelte/store";
+import { createTile } from "../../../api/api";
+import { TileTypes } from "../../../api/dtos/TileDTOs";
 
   let dispatch = createEventDispatcher();
 
@@ -17,7 +18,7 @@
   let dataSource = 'http://localhost:3000/random'
   let data_3 = 'Something'
   let value: any = 5000
-  let tileType = 'Stat'
+  let tileType: TileTypes = TileTypes.Number
   export let open;
   export let update = false;
   let splide
@@ -47,14 +48,16 @@
   }
 
   const handleCreate = async () => {
-    await createStat($url, {
-      label: title,
-      source: dataSource,
+    await createTile($url, {
       width: 2,
       height: 2,
       x: 0,
       y: 0,
-      type: 'StatTile'
+      type: tileType,
+      content: {
+        label: title,
+        dataSource
+      }
     })
 
     dispatch('created');
@@ -63,12 +66,11 @@
 
 
   const handleTileTypeSelect = (type, _value) => {
-    if (tileType !== type) {
-      tileType = type;
-      value = _value;
-    } 
-    
+    tileType = type;
+    value = _value;
   }
+
+  $: console.log(open);
 </script>
 
 <Modal class="max-w-[1200px]" {open}>
@@ -97,12 +99,12 @@
     <Splide options={options}>
       <SplideSlide class="flex-center splide__slide is-active is-visible">
         <div class="w-full h-full p-8">
-          <TilePreview on:click={() => handleTileTypeSelect('Stat', 5000) } title='Stat' tileType='Stat' value=5000/>
+          <TilePreview on:click={() => handleTileTypeSelect('Stat', 5000) } title='Stat' tileType={TileTypes.Number} value=5000/>
         </div>
       </SplideSlide>
       <SplideSlide class="flex-center splide__slide is-active is-visible">
         <div class="w-full h-full p-8">
-          <TilePreview on:click={() => handleTileTypeSelect('Piechart', [5, 7, 3]) } title='Piechart' tileType='Piechart' value={[2, 5, 7]}/>
+          <TilePreview on:click={() => handleTileTypeSelect('Piechart', [2, 5, 7]) } title='Piechart' tileType={TileTypes.PieChart} value={[2, 5, 7]}/>
         </div>
       </SplideSlide>
     </Splide>

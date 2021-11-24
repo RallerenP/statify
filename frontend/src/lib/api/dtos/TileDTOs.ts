@@ -1,39 +1,25 @@
+export enum TileTypes {
+  'Number',
+  'PieChart',
+  'BarChart',
+  'LineChart',
+  'ScatterChart',
+  'OnOff',
+}
+
 export interface TileDTO {
   _id: string;
   x: number,
   y: number,
   width: number,
   height: number,
-  content: StatTileDTO
+  type: TileTypes, 
+  content: TileDTOContent
 }
 
-export interface StatTileDTO extends TileDTO {
-  source: string,
-  type: 'StatTile'
-  label: string
+export interface TileDTOContent {
+  label: string,
+  dataSource: string
 }
 
-export interface PieChartDTO {
-  labels: any[]
-  data: []
-}
-
-export interface UpdateTileDTO {
-  width: number;
-  height: number;
-  x: number;
-  y: number;
-}
-
-export interface CreateTileDTO {
-  x: number,
-  y: number,
-  width: number,
-  height: number,
-  type: string,
-}
-
-export interface CreateStatTileDTO extends CreateTileDTO{
-  label: string;
-  source: string;
-}
+export interface CreateTileDTO extends Omit<TileDTO, '_id'> {}
