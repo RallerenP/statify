@@ -4,13 +4,14 @@
   import type { StatTileDTO } from "../../api/dtos/TileDTOs";
   import Spinner from "../../Spinner.svelte";
   import { edit } from "../../../stores/stores";
-  import { deleteStat, updateStat } from "../../api/api";
+  import type { TileDTO, TileDTOContent } from "../../api/dtos/TileDTOs";
+  import { updateTile } from "../../api/api";
 
   const dispatch = createEventDispatcher();
   
   export let id;
   export let gridOptions: {w: number, h: number, x: number, y: number};
-  export let content: StatTileDTO
+  export let content: TileDTOContent
 
   let loading: boolean = true;
   let item;
@@ -23,7 +24,7 @@
   }
 
   onMount(async () => {
-    value = await fetch(content.source).then(res => res.json());
+    value = await fetch(content.dataSource).then(res => res.json());
     loading = false;
   })
 
@@ -34,12 +35,10 @@
 
     e.target.blur();
 
-    content = await updateStat(content._id, dto)
-    
+    dispatch('update', { ...content, dto })
   }
 
   const handleDelete = async () => {
-    await deleteStat(content._id);
     dispatch('delete', item.getWidget())
   }
 </script>

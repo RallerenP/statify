@@ -1,16 +1,8 @@
 import { UpdateTileDTO } from '../dtos/update-tile.dto';
-import {
-  Injectable,
-  HttpException,
-  HttpStatus,
-  forwardRef,
-  Inject,
-} from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Tile, TileDocument } from '../schemas/tile.schema';
-import { StatTile } from '../schemas/stat-tile.schema';
-import { StatTileService } from '../../stat-tile/stat-tile.service';
 import { CreateTileDTO } from '../dtos/create-tile-dto';
 
 @Injectable()
@@ -18,16 +10,10 @@ export class TileService {
   constructor(
     @InjectModel(Tile.name)
     private readonly tileModel: Model<TileDocument>,
-    @Inject(forwardRef(() => StatTileService))
-    private readonly statTileService: StatTileService,
   ) {}
 
-  async create(
-    url: string,
-    createTileDto: CreateTileDTO,
-    content: { _id: string },
-  ) {
-    const { width, height, x, y, type } = createTileDto;
+  async create(url: string, dto: CreateTileDTO) {
+    const { width, height, x, y, type, content } = dto;
 
     const created = new this.tileModel({
       url,
@@ -36,7 +22,7 @@ export class TileService {
       x,
       y,
       type,
-      content: content._id,
+      content,
     });
 
     await created.save();
@@ -45,7 +31,7 @@ export class TileService {
   }
 
   async getAll(url: string) {
-    return this.tileModel.find({ url }).populate('content');
+    return this.tileModel.find({ url });
   }
 
   async update(id: string, dto: UpdateTileDTO) {
@@ -53,12 +39,13 @@ export class TileService {
 
     if (!found) throw new HttpException('Tile not found', HttpStatus.NOT_FOUND);
 
-    const { x, y, width, height } = dto;
+    const { x, y, width, height, content } = dto;
 
     found.x = x;
     found.y = y;
     found.width = width;
     found.height = height;
+    found.content = content;
 
     return await found.save();
   }

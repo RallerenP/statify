@@ -8,7 +8,6 @@ import { MenuModule } from './menu/menu.module';
 import { TileModule } from './tile/tile.module';
 import { BitcoinModule } from './bitcoin/bitcoin.module';
 import { RandomModule } from './random/random.module';
-import { StatTileModule } from './stat-tile/stat-tile.module';
 
 @Module({
   imports: [
@@ -19,7 +18,6 @@ import { StatTileModule } from './stat-tile/stat-tile.module';
     TileModule,
     BitcoinModule,
     RandomModule,
-    StatTileModule,
   ],
   controllers: [AppController],
   providers: [AppService],

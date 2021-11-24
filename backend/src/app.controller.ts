@@ -3,20 +3,20 @@ import { AppService } from './app.service';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  // constructor(private readonly appService: AppService) {}
 
-  @Get()
-  getHello() {
-    return this.appService.getListOfSubscriptions();
-  }
+  // @Get()
+  // getHello() {
+  //   return this.appService.getListOfSubscriptions();
+  // }
 
-  @Get('/resources')
-  resources() {
-    return this.appService.getResources();
-  }
+  // @Get('/resources')
+  // resources() {
+  //   return this.appService.getResources();
+  // }
 
-  @Get('/metrics')
-  metrics() {
-    return this.appService.getResourceCost();
-  }
+  // @Get('/metrics')
+  // metrics() {
+  //   return this.appService.getResourceCost();
+  // }
 }

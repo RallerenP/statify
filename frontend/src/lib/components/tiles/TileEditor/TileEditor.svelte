@@ -7,17 +7,17 @@
   import { Splide, SplideSlide, Options } from '@splidejs/svelte-splide';
   import '@splidejs/splide/dist/css/splide.min.css';
   import { url } from '../../../../stores/stores';
-  import { createStat } from "../../../api/api";
-  import { createEventDispatcher } from 'svelte';
-import { dataset_dev } from "svelte/internal";
+  import { createEventDispatcher, onMount } from 'svelte';
+  import { TileTypes } from "../../../api/dtos/TileDTOs";
+import { createTile } from "src/lib/api/api";
 
   let dispatch = createEventDispatcher();
 
-  let title = 'default'
+  let label = 'default'
   let dataSource = 'http://localhost:3000/random'
   let data_3 = 'Something'
   let value: any = 5000
-  let tileType = 'Stat'
+  let tileType: TileTypes = TileTypes.Number
   export let open;
   export let update = false;
 
@@ -45,16 +45,19 @@ import { dataset_dev } from "svelte/internal";
     },
   }
 
+  $: console.log(open)
+
   const handleCreate = async () => {
-    console.log(title, dataSource, tileType)
-    await createStat($url, {
-      label: title,
-      source: dataSource,
+    await createTile($url, {
       width: 2,
       height: 2,
       x: 0,
       y: 0,
-      type: 'StatTile'
+      type: tileType,
+      content: {
+        label,
+        dataSource
+      }
     })
 
     dispatch('created');
@@ -63,12 +66,11 @@ import { dataset_dev } from "svelte/internal";
 
 
   const handleTileTypeSelect = (type, _value) => {
-    if (tileType !== type) {
-      tileType = type;
-      value = _value;
-    } 
-    
+    tileType = type;
+    value = _value;
   }
+
+  $: console.log(open);
 </script>
 
 <Modal class="max-w-[1200px]" {open}>
@@ -78,7 +80,7 @@ import { dataset_dev } from "svelte/internal";
       <div class="w-1/2">
         <span class="text-[18px]">Settings</span>
         <div class="form-control mt-2">
-          <InputField bind:value={title}>Title</InputField>
+          <InputField bind:value={label}>Title</InputField>
           <InputField class="my-4" on:keydown={handleDataSourceChange} bind:value={dataSource}>Data Source</InputField>
           <InputField bind:value={data_3}>Data 3</InputField>
         </div> 
@@ -88,7 +90,7 @@ import { dataset_dev } from "svelte/internal";
           <span class="text-[18px] mb-2">Preview</span>
           <div class="flex-grow"></div>
         </div>
-        <TilePreview value={value} {tileType} {title}></TilePreview>
+        <TilePreview value={value} {tileType} title={label}></TilePreview>
       </div>
     </div>
   </div>
@@ -97,12 +99,12 @@ import { dataset_dev } from "svelte/internal";
     <Splide options={options}>
       <SplideSlide class="flex-center splide__slide is-active is-visible">
         <div class="w-full h-full p-8">
-          <TilePreview on:click={() => handleTileTypeSelect('Stat', 5000) } title='Stat' tileType='Stat' value=5000/>
+          <TilePreview on:click={() => handleTileTypeSelect(TileTypes.Number, 5000) } title='Stat' tileType={TileTypes.Number} value=5000/>
         </div>
       </SplideSlide>
       <SplideSlide class="flex-center splide__slide is-active is-visible">
         <div class="w-full h-full p-8">
-          <TilePreview on:click={() => handleTileTypeSelect('Piechart', [5, 7, 3]) } title='Piechart' tileType='Piechart' value={[2, 5, 7]}/>
+          <TilePreview on:click={() => handleTileTypeSelect(TileTypes.PieChart, [2, 5, 7]) } title='Piechart' tileType={TileTypes.PieChart} value={[2, 5, 7]}/>
         </div>
       </SplideSlide>
     </Splide>

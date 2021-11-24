@@ -1,4 +1,4 @@
-import { IsNotEmpty } from 'class-validator';
+import { IsNotEmpty, IsUrl } from 'class-validator';
 
 export class UpdateTileDTO {
   @IsNotEmpty()
@@ -12,4 +12,14 @@ export class UpdateTileDTO {
 
   @IsNotEmpty()
   y: number;
+
+  content: UpdateTileContentDTO;
+}
+
+class UpdateTileContentDTO {
+  @IsNotEmpty()
+  label: string;
+
+  @IsUrl()
+  dataSource: string;
 }
