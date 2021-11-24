@@ -25,7 +25,7 @@ export class TileController {
     @Param('url') url: string,
     @Body() dto: CreateTileDTO,
   ): Promise<Tile> {
-    return this.tileService.create(url, dto);
+    return this.tileService.create(`/${url}`, dto);
   }
 
   /**

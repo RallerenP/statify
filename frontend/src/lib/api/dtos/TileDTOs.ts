@@ -1,10 +1,10 @@
 export enum TileTypes {
-  'Number',
-  'PieChart',
-  'BarChart',
-  'LineChart',
-  'ScatterChart',
-  'OnOff',
+  'Number' = 'NUMBER',
+  'PieChart' = 'PIE_CHART',
+  'BarChart' = 'BAR_CHART',
+  'LineChart' = 'LINE_CHART',
+  'ScatterChart' = 'SCATTER_CHART',
+  'OnOff' = 'ON_OFF',
 }
 
 export interface TileDTO {
@@ -14,10 +14,10 @@ export interface TileDTO {
   width: number,
   height: number,
   type: TileTypes, 
-  content: TileDTOContent
+  content: TileContentDTO
 }
 
-export interface TileDTOContent {
+export interface TileContentDTO {
   label: string,
   dataSource: string
 }

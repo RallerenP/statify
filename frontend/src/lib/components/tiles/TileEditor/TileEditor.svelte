@@ -67,12 +67,11 @@ import { TileTypes } from "../../../api/dtos/TileDTOs";
   }
 
 
-  const handleTileTypeSelect = (type, _value) => {
+  const handleTileTypeSelect = (type: TileTypes, _value: any) => {
     tileType = type;
     value = _value;
   }
 
-  $: console.log(open);
 </script>
 
 <Modal class="max-w-[1200px]" {open}>
@@ -101,12 +100,12 @@ import { TileTypes } from "../../../api/dtos/TileDTOs";
     <Splide options={options}>
       <SplideSlide class="flex-center splide__slide is-active is-visible">
         <div class="w-full h-full p-8">
-          <TilePreview on:click={() => handleTileTypeSelect('Stat', 5000) } title='Stat' tileType={TileTypes.Number} value=5000/>
+          <TilePreview on:click={() => handleTileTypeSelect(TileTypes.Number, 5000) } title='Stat' tileType={TileTypes.Number} value=5000/>
         </div>
       </SplideSlide>
       <SplideSlide class="flex-center splide__slide is-active is-visible">
         <div class="w-full h-full p-8">
-          <TilePreview on:click={() => handleTileTypeSelect('Piechart', [2, 5, 7]) } title='Piechart' tileType={TileTypes.PieChart} value={[2, 5, 7]}/>
+          <TilePreview on:click={() => handleTileTypeSelect(TileTypes.PieChart, [2, 5, 7]) } title='Piechart' tileType={TileTypes.PieChart} value={[2, 5, 7]}/>
         </div>
       </SplideSlide>
     </Splide>
