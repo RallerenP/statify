@@ -14,7 +14,7 @@ import { TileTypes } from "../../../api/dtos/TileDTOs";
 
   let dispatch = createEventDispatcher();
 
-  let title = 'default'
+  let label = 'default'
   let dataSource = 'http://localhost:3000/random'
   let data_3 = 'Something'
   let value: any = 5000
@@ -47,6 +47,8 @@ import { TileTypes } from "../../../api/dtos/TileDTOs";
     },
   }
 
+  $: console.log(open)
+
   const handleCreate = async () => {
     await createTile($url, {
       width: 2,
@@ -55,7 +57,7 @@ import { TileTypes } from "../../../api/dtos/TileDTOs";
       y: 0,
       type: tileType,
       content: {
-        label: title,
+        label,
         dataSource
       }
     })
@@ -80,7 +82,7 @@ import { TileTypes } from "../../../api/dtos/TileDTOs";
       <div class="w-1/2">
         <span class="text-[18px]">Settings</span>
         <div class="form-control mt-2">
-          <InputField bind:value={title}>Title</InputField>
+          <InputField bind:value={label}>Title</InputField>
           <InputField class="my-4" on:keydown={handleDataSourceChange} bind:value={dataSource}>Data Source</InputField>
           <InputField bind:value={data_3}>Data 3</InputField>
         </div> 
@@ -90,7 +92,7 @@ import { TileTypes } from "../../../api/dtos/TileDTOs";
           <span class="text-[18px] mb-2">Preview</span>
           <div class="flex-grow"></div>
         </div>
-        <TilePreview value={value} {tileType} {title}></TilePreview>
+        <TilePreview value={value} {tileType} title={label}></TilePreview>
       </div>
     </div>
   </div>

@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "start": "yarn serve --host",
     "serve": "vite preview",
     "check": "svelte-check --tsconfig ./tsconfig.json"
   },

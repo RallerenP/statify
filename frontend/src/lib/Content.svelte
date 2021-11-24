@@ -57,7 +57,7 @@
     <Spinner />
   {:else}
     {#if $edit}
-        <TileEditor on:created={() => update()} bind:open={deleteModalOpen}/>
+      <TileEditor on:created={() => update()} bind:open={deleteModalOpen}/>
     {/if}
     {#if tiles.length === 0}
       <div class="flex justify-center items-center h-full flex-col" >
@@ -90,7 +90,8 @@
     {#if $edit}
     <div class="flex">
       <div class="flex-grow"></div>
-      <div class="text-4xl bg-ghost rounded w-[40px] mr-20 hover:cursor-pointer text-center" on:click={ () => deleteModalOpen = true }>+</div>
+      <div 
+        class="text-4xl bg-ghost rounded w-[40px] mr-20 hover:cursor-pointer text-center" on:click={ () => deleteModalOpen = true }>+</div>
     </div>
     {/if}
   {/if}
