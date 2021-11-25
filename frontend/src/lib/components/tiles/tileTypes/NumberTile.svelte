@@ -1,17 +1,15 @@
 <script lang="ts">
-  import GridStackItem from "../GridStack/GridStackItem.svelte";
-  import { getContext, onMount, createEventDispatcher } from 'svelte';
-  import type { Writable } from "svelte/store";
-  import type { StatTileDTO } from "../../api/dtos/TileDTOs";
-  import Spinner from "../../Spinner.svelte";
-  import { edit } from "../../../stores/stores";
-  import { deleteStat, updateStat } from "../../api/api";
+  import GridStackItem from "../../GridStack/GridStackItem.svelte";
+  import { onMount, createEventDispatcher } from 'svelte';
+  import Spinner from "../../../Spinner.svelte";
+  import { edit } from "../../../../stores/stores";
+  import type { TileContentDTO } from "../../../api/dtos/TileDTOs";
 
   const dispatch = createEventDispatcher();
   
   export let id;
   export let gridOptions: {w: number, h: number, x: number, y: number};
-  export let content: StatTileDTO
+  export let content: TileContentDTO
 
   let loading: boolean = true;
   let item;
@@ -24,7 +22,7 @@
   }
 
   onMount(async () => {
-    value = await fetch(content.source).then(res => res.json());
+    value = await fetch(content.dataSource).then(res => res.json());
     loading = false;
   })
 
@@ -35,12 +33,10 @@
 
     e.target.blur();
 
-    content = await updateStat(content._id, dto)
-    
+    dispatch('update', { ...content, ...dto })
   }
 
   const handleDelete = async () => {
-    await deleteStat(content._id);
     dispatch('delete', item.getWidget())
   }
 </script>
