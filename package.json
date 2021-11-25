@@ -8,7 +8,8 @@
   "scripts": {
     "cypress:run": "cy2 run",
     "cypress:record": "cy2 run --record --key somekey",
-    "cypress:open": "cypress open"
+    "cypress:open": "cypress open",
+    "docker:compose": "docker-compose up --build"
   },
   "dependencies": {
     "cy2": "^1.3.0",
