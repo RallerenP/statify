@@ -4,12 +4,12 @@
   import ModalTitle from "../../Modal/ModalTitle.svelte";
   import InputField from "./InputField.svelte";
   import TilePreview from "./previews/TilePreview.svelte";
-  import { Splide, SplideSlide, Options } from '@splidejs/svelte-splide';
+  import { Splide, SplideSlide } from '@splidejs/svelte-splide';
   import '@splidejs/splide/dist/css/splide.min.css';
   import { url } from '../../../../stores/stores';
-  import { createEventDispatcher, onMount } from 'svelte';
+  import { createEventDispatcher } from 'svelte';
   import { TileTypes } from "../../../api/dtos/TileDTOs";
-import { createTile } from "../../../api/api";
+  import { createTile } from "../../../api/api";
 
   let dispatch = createEventDispatcher();
 
@@ -29,7 +29,7 @@ import { createTile } from "../../../api/api";
     value = (await fetch(dataSource).then(res => res.json())).value;
   }
 
-  const options: Options = {
+  const options = {
     rewind : true,
     perPage: 3,
     gap    : '1rem',
@@ -90,7 +90,7 @@ import { createTile } from "../../../api/api";
           <span class="text-[18px] mb-2">Preview</span>
           <div class="flex-grow"></div>
         </div>
-        <TilePreview value={value} {tileType} title={label}></TilePreview>
+        <TilePreview {value} {tileType} title={label}></TilePreview>
       </div>
     </div>
   </div>
@@ -105,6 +105,26 @@ import { createTile } from "../../../api/api";
       <SplideSlide class="flex-center splide__slide is-active is-visible">
         <div class="w-full h-full p-8">
           <TilePreview on:click={() => handleTileTypeSelect(TileTypes.PieChart, [2, 5, 7]) } title='Piechart' tileType={TileTypes.PieChart} value={[2, 5, 7]}/>
+        </div>
+      </SplideSlide>
+      <SplideSlide class="flex-center splide__slide is-active is-visible">
+        <div class="w-full h-full p-8">
+          <TilePreview on:click={() => handleTileTypeSelect(TileTypes.LineChart, [10, 3, 8]) } title='Linechart' tileType={TileTypes.LineChart} value={[10, 3, 8]}/>
+        </div>
+      </SplideSlide>
+      <SplideSlide class="flex-center splide__slide is-active is-visible">
+        <div class="w-full h-full p-8">
+          <TilePreview on:click={() => handleTileTypeSelect(TileTypes.BarChart, [10, 3, 8]) } title='Barchart' tileType={TileTypes.BarChart} value={[10, 3, 8]}/>
+        </div>
+      </SplideSlide>
+      <SplideSlide class="flex-center splide__slide is-active is-visible">
+        <div class="w-full h-full p-8">
+          <TilePreview on:click={() => handleTileTypeSelect(TileTypes.ScatterChart, [10, 3, 8]) } title='Scatterchart' tileType={TileTypes.ScatterChart} value={[10, 3, 8]}/>
+        </div>
+      </SplideSlide>
+      <SplideSlide class="flex-center splide__slide is-active is-visible">
+        <div class="w-full h-full p-8">
+          <TilePreview on:click={() => handleTileTypeSelect(TileTypes.OnOff, true) } title='On Off Tile' tileType={TileTypes.OnOff} value={true}/>
         </div>
       </SplideSlide>
     </Splide>

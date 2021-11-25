@@ -28,4 +28,32 @@ export class RandomController {
       description: 'An array of random numbers',
     };
   }
+
+  /**
+   * Get a random list of random labels & numbers, used for certain charts
+   */
+  @Get('/simpleChart')
+  getLabelsAndNumbers() {
+    return {
+      value: this.randomService.getLabelsAndNumbers(),
+      description: 'An object of an array with random labels, and an array of random numbers',
+    };
+  }
+
+  @Get('/advancedChart')
+  getRandomScatterPoints() {
+    return {
+      value: this.randomService.getRandomScatterPoints(),
+      description: 'An array of random scatter points objects',
+    }
+  }
+
+  @Get('/onOff')
+  getRandomOnOff() {
+    return {
+      value: this.randomService.getRandomOnOff(),
+      description: 'Show whether a service is offline or online'
+    };
+  }
+
 }

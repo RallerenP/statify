@@ -35,4 +35,4 @@
 </script>
 
 <div class="stat-value"><canvas width="100" bind:this={canvas}></canvas></div>
-<div class="stat-desc">Overview over countries</div>
+<div class="stat-desc">Comparing values in a visual format</div>

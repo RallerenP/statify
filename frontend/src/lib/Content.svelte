@@ -1,13 +1,12 @@
 <script lang="ts">
   import GridStack from "./components/GridStack/GridStack.svelte";
   import { onMount, tick } from 'svelte';
-  import StatTile from "./components/tiles/StatTile.svelte";
   import Spinner from "./Spinner.svelte";
   import { getTiles, updateTile } from "./api/api";
-  import { TileDTO, TileTypes } from "./api/dtos/TileDTOs";
-  import ChartTile from "./components/tiles/ChartTile.svelte";
+  import type { TileDTO } from "./api/dtos/TileDTOs";
   import { edit, url } from '../stores/stores';
   import TileEditor from "./components/tiles/TileEditor/TileEditor.svelte";
+  import TileWrapper from "./components/tiles/TileWrapper.svelte";
 
   let loading = true;
   let tiles: TileDTO[];
@@ -23,12 +22,12 @@
     });
   }
 
-  const handleDelete = async (widget) => {
-    gridstack.removeWidget(widget);
-  }
-
   const handleUpdate = async (tile: TileDTO, dto: any) => {
     updateTile(tile._id, { ...tile, content: { ...dto } })
+  }
+
+  const handleDelete = async (widget) => {
+    gridstack.removeWidget(widget);
   }
 
   let deleteModalOpen = false;
@@ -39,7 +38,6 @@
 
   async function update() {
     tiles = await getTiles($url);
-    console.log(tiles)
     loading = false;
     await tick()
     if (gridstack) gridstack.reset();
@@ -67,23 +65,7 @@
     {:else}
       <GridStack bind:this={gridstack} lock={!$edit} on:change={handleChange}>
         
-        {#each tiles as tile}
-          {#if tile.type === TileTypes.Number}
-            <StatTile 
-              id={tile._id} 
-              gridOptions={{w: tile.width, h: tile.height, x: tile.x, y: tile.y}}
-              content={tile.content}
-              on:delete={(e) => handleDelete(e.detail)}
-              on:update={(e) => handleUpdate(tile, e.detail)}
-            />
-          {:else if tile.type === TileTypes.PieChart}
-            <ChartTile 
-              id={tile._id} 
-              gridOptions={{w: tile.width, h: tile.height, x: tile.x, y: tile.y}}
-              content={tile.content}
-            />
-          {/if}
-        {/each}
+        <TileWrapper on:delete={(e) => handleDelete(e.detail)} on:update={(e) => handleUpdate(e.detail.tile, e.detail.dto)} {tiles}/>
         
       </GridStack>
     {/if}
