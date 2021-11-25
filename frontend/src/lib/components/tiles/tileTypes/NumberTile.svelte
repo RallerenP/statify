@@ -1,17 +1,15 @@
 <script lang="ts">
-  import GridStackItem from "../GridStack/GridStackItem.svelte";
+  import GridStackItem from "../../GridStack/GridStackItem.svelte";
   import { onMount, createEventDispatcher } from 'svelte';
-  import type { StatTileDTO } from "../../api/dtos/TileDTOs";
-  import Spinner from "../../Spinner.svelte";
-  import { edit } from "../../../stores/stores";
-  import type { TileDTO, TileDTOContent } from "../../api/dtos/TileDTOs";
-  import { updateTile } from "../../api/api";
+  import Spinner from "../../../Spinner.svelte";
+  import { edit } from "../../../../stores/stores";
+  import type { TileContentDTO } from "../../../api/dtos/TileDTOs";
 
   const dispatch = createEventDispatcher();
   
   export let id;
   export let gridOptions: {w: number, h: number, x: number, y: number};
-  export let content: TileDTOContent
+  export let content: TileContentDTO
 
   let loading: boolean = true;
   let item;
