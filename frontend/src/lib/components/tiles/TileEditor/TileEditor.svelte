@@ -8,9 +8,8 @@
   import '@splidejs/splide/dist/css/splide.min.css';
   import { url } from '../../../../stores/stores';
   import { createEventDispatcher, onMount } from 'svelte';
-  import { get } from "svelte/store";
+  import { TileTypes } from "../../../api/dtos/TileDTOs";
 import { createTile } from "../../../api/api";
-import { TileTypes } from "../../../api/dtos/TileDTOs";
 
   let dispatch = createEventDispatcher();
 
@@ -21,7 +20,6 @@ import { TileTypes } from "../../../api/dtos/TileDTOs";
   let tileType: TileTypes = TileTypes.Number
   export let open;
   export let update = false;
-  let splide
 
   const handleDataSourceChange = (e: KeyboardEvent) => {
     if (e.key === "Enter") get();
@@ -50,6 +48,7 @@ import { TileTypes } from "../../../api/dtos/TileDTOs";
   $: console.log(open)
 
   const handleCreate = async () => {
+    console.log(label, dataSource, tileType)
     await createTile($url, {
       width: 2,
       height: 2,

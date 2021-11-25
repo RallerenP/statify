@@ -4,7 +4,7 @@
   import StatTile from "./components/tiles/StatTile.svelte";
   import Spinner from "./Spinner.svelte";
   import { getTiles, updateTile } from "./api/api";
-  import type { TileDTO } from "./api/dtos/TileDTOs";
+  import { TileDTO, TileTypes } from "./api/dtos/TileDTOs";
   import ChartTile from "./components/tiles/ChartTile.svelte";
   import { edit, url } from '../stores/stores';
   import TileEditor from "./components/tiles/TileEditor/TileEditor.svelte";
@@ -68,7 +68,7 @@
       <GridStack bind:this={gridstack} lock={!$edit} on:change={handleChange}>
         
         {#each tiles as tile}
-          {#if !tile.content.dataSource.includes('array')}
+          {#if tile.type === TileTypes.Number}
             <StatTile 
               id={tile._id} 
               gridOptions={{w: tile.width, h: tile.height, x: tile.x, y: tile.y}}
@@ -76,7 +76,7 @@
               on:delete={(e) => handleDelete(e.detail)}
               on:update={(e) => handleUpdate(tile, e.detail)}
             />
-          {:else}
+          {:else if tile.type === TileTypes.PieChart}
             <ChartTile 
               id={tile._id} 
               gridOptions={{w: tile.width, h: tile.height, x: tile.x, y: tile.y}}

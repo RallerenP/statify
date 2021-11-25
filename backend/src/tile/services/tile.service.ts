@@ -41,11 +41,11 @@ export class TileService {
 
     const { x, y, width, height, content } = dto;
 
-    found.x = x;
-    found.y = y;
-    found.width = width;
-    found.height = height;
-    found.content = content;
+    if (x !== undefined) found.x = x;
+    if (y !== undefined) found.y = y;
+    if (width !== undefined) found.width = width;
+    if (height !== undefined) found.height = height;
+    if (content !== undefined) found.content = content;
 
     return await found.save();
   }

@@ -1,11 +1,11 @@
 <script lang="ts">
   import GridStackItem from "../GridStack/GridStackItem.svelte";
-  import { getContext, onMount, createEventDispatcher } from 'svelte';
-  import type { Writable } from "svelte/store";
+  import { onMount, createEventDispatcher } from 'svelte';
+  import type { StatTileDTO } from "../../api/dtos/TileDTOs";
   import Spinner from "../../Spinner.svelte";
   import { edit } from "../../../stores/stores";
   import type { TileDTO, TileDTOContent } from "../../api/dtos/TileDTOs";
-import { updateTile } from "../../api/api";
+  import { updateTile } from "../../api/api";
 
   const dispatch = createEventDispatcher();
   
@@ -35,7 +35,7 @@ import { updateTile } from "../../api/api";
 
     e.target.blur();
 
-    dispatch('update', { ...content, dto })
+    dispatch('update', { ...content, ...dto })
   }
 
   const handleDelete = async () => {

@@ -1,25 +1,27 @@
-import { IsNotEmpty, IsUrl } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsNotEmpty, IsOptional, IsUrl, ValidateNested } from 'class-validator';
 
-export class UpdateTileDTO {
-  @IsNotEmpty()
-  width: number;
-
-  @IsNotEmpty()
-  height: number;
-
-  @IsNotEmpty()
-  x: number;
-
-  @IsNotEmpty()
-  y: number;
-
-  content: UpdateTileContentDTO;
-}
 
 class UpdateTileContentDTO {
   @IsNotEmpty()
   label: string;
 
-  @IsUrl()
+  @IsUrl({ require_tld: false })
   dataSource: string;
+}
+
+
+export class UpdateTileDTO {
+  width?: number;
+
+  height?: number;
+
+  x?: number;
+
+  y?: number;
+
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => UpdateTileContentDTO)
+  content?: UpdateTileContentDTO;
 }
