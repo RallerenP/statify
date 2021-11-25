@@ -1,0 +1,18 @@
+{
+  "name": "statify",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/RallerenP/statify.git",
+  "author": "RallerenP <17848169+RallerenP@users.noreply.github.com>",
+  "license": "MIT",
+  "scripts": {
+    "cypress:run": "cy2 run",
+    "cypress:record": "cy2 run --record --key somekey",
+    "cypress:open": "cypress open"
+  },
+  "dependencies": {
+    "cy2": "^1.3.0",
+    "cypress": "^9.1.0",
+    "har-validator": "^5.1.5"
+  }
+}
