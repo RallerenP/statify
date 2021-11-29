@@ -13,6 +13,8 @@ services:
     volumes:
       - ./backend:/project:rw
     command: npm run --prefix project start
+    ports:
+      - 3000:3000
     depends_on:
       - mongo
     environment:
@@ -23,5 +25,7 @@ services:
     volumes:
       - ./frontend:/project:rw
     command: npm run --prefix project start
+    ports:
+      - 5000:5000
     depends_on:
       - backend
