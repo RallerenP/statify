@@ -18,7 +18,6 @@
   onMount(async () => {
     response = await fetch(content.dataSource).then(res => res.json());
     loading = false;
-    console.log(response)
   })
 
   const handleKeypress = async (e) => {
