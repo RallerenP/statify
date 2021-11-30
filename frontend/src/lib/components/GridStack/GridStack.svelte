@@ -2,7 +2,7 @@
   import 'gridstack/dist/gridstack.min.css';
   import 'gridstack/dist/jq/gridstack-dd-jqueryui';
   import { GridStack, GridStackOptions } from 'gridstack'; 
-  import { onMount, createEventDispatcher, onDestroy } from 'svelte';
+  import { onMount, createEventDispatcher, onDestroy, tick } from 'svelte';
   
   const dispatch = createEventDispatcher();
   
@@ -31,11 +31,14 @@
       grid.enable();
   }
 
-  onMount(() => {
+  onMount(async () => {
     grid = GridStack.init(options);
     grid.on('change', (e, elements) => {
       dispatch('change', elements);
     });
+    
+    await tick();
+    dispatch('done');
   })
 
 </script>

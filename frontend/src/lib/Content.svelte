@@ -48,6 +48,8 @@
     update();  
   }
 
+  let renderCharts = false;
+
 </script>
 
 <div class="flex-grow overflow-y-auto overflow-x-hidden {loading && 'flex justify-center items-center'}">
@@ -63,9 +65,9 @@
         <span class="text-2xl my-4">🤮 No tile 😰</span>
       </div>
     {:else}
-      <GridStack bind:this={gridstack} lock={!$edit} on:change={handleChange}>
+      <GridStack bind:this={gridstack} lock={!$edit} on:change={handleChange} on:done={() => renderCharts = true}>
         
-        <TileWrapper on:delete={(e) => handleDelete(e.detail)} on:update={(e) => handleUpdate(e.detail.tile, e.detail.dto)} {tiles}/>
+        <TileWrapper {renderCharts} on:delete={(e) => handleDelete(e.detail)} on:update={(e) => handleUpdate(e.detail.tile, e.detail.dto)} {tiles}/>
         
       </GridStack>
     {/if}
