@@ -4,21 +4,25 @@
   import Spinner from "../../../Spinner.svelte";
   import { edit } from "../../../../stores/stores";
   import type { TileContentDTO } from "../../../api/dtos/TileDTOs";
+import Loader from "../../../Loader.svelte";
 
   export let dataSource;
+
   let data: any;
+  let loading = true;
 
   
   onMount(async () => {
     data = await fetch(dataSource).then(res => res.json());
+    loading = false;
   })
 </script>
 
-<div class="stat-value">
-  {#if data.value.state}
-    <span class='text-success'>Online</span>
-    {:else}
-      <span class='text-error'>Offline</span>
-    {/if}
-  </div> 
-<div class="stat-desc">{dataSource}</div>
+<Loader {loading}>
+  <div class="flex justify-center flex-grow h-full flex-col">
+    <div class="stat-value">
+      { data.value }  
+    </div> 
+  </div>
+</Loader>
+

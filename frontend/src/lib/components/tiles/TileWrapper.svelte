@@ -1,12 +1,8 @@
 <script lang="ts">
 import { TileDTO, TileTypes } from "../../api/dtos/TileDTOs";
-import PieChartTile from "./tileTypes/PieChartTile.svelte";
-import NumberTile from "./tileTypes/NumberTile.svelte";
+import Number from "./tileTypes/Number.svelte";
 import { createEventDispatcher } from 'svelte';
-import LineChartTile from "./tileTypes/LineChartTile.svelte";
-import BarChartTile from "./tileTypes/BarChartTile.svelte";
-import ScatterChartTile from "./tileTypes/ScatterChartTile.svelte";
-import OnOff from "./tileTypes/OnOffTile.svelte";
+import OnOff from "./tileTypes/OnOff.svelte";
 import Chart from "./tileTypes/Chart.svelte";
 import Tile from './tileTypes/Tile.svelte';
 
@@ -30,7 +26,7 @@ import Tile from './tileTypes/Tile.svelte';
     on:update={(e) => handleUpdate(tile, e.detail)}
   >
   {#if tile.type === TileTypes.Number}
-    <!-- <Chart type="pie" dataSource={tile.content.dataSource}></Chart> -->
+    <Number dataSource={tile.content.dataSource}></Number>
   {:else if tile.type === TileTypes.PieChart}
     <Chart type="pie" dataSource={tile.content.dataSource}></Chart>
   {:else if tile.type === TileTypes.LineChart}

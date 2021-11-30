@@ -1,6 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Mongoose, RefType, Types } from 'mongoose';
-import { StatTile } from './stat-tile.schema';
 
 export type TileDocument = Tile & Document;
 
@@ -15,7 +14,7 @@ export type TileDocument = Tile & Document;
 //   'DIVIDER',
 // ];
 
-enum TileTypes {
+export enum TileTypes {
   'Number' = 'NUMBER',
   'PieChart' = 'PIE_CHART',
   'BarChart' = 'BAR_CHART',

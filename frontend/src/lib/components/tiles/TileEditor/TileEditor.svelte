@@ -10,6 +10,7 @@
   import { createEventDispatcher } from 'svelte';
   import { TileTypes } from "../../../api/dtos/TileDTOs";
   import { createTile } from "../../../api/api";
+  import type { DataSourceDTO } from "../../../api/dtos/DataSourceDTO";
 
   let dispatch = createEventDispatcher();
 
@@ -18,6 +19,7 @@
   let data_3 = 'Something'
   let value: any = 5000
   let tileType: TileTypes = TileTypes.Number
+  let valid = false;
   export let open;
   export let update = false;
 
@@ -26,7 +28,17 @@
   }
 
   async function get() {
-    value = (await fetch(dataSource).then(res => res.json())).value;
+    try {
+      const data: DataSourceDTO = await fetch(dataSource).then(res => res.json());
+
+      if (data.compatible.includes(tileType)) valid = true;
+      else valid = false;
+
+      value = data.value;
+    } catch(e) {
+      valid = false;
+    }
+    
   }
 
   const options = {
@@ -69,6 +81,8 @@
   const handleTileTypeSelect = (type: TileTypes, _value: any) => {
     tileType = type;
     value = _value;
+
+    get();
   }
 
 </script>
@@ -81,7 +95,19 @@
         <span class="text-[18px]">Settings</span>
         <div class="form-control mt-2">
           <InputField bind:value={label}>Title</InputField>
-          <InputField class="my-4" on:keydown={handleDataSourceChange} bind:value={dataSource}>Data Source</InputField>
+          <div class="my-4 flex items-center">
+            <InputField class="flex-shrink-0" on:keydown={handleDataSourceChange} bind:value={dataSource}>Data Source</InputField>
+            <!-- TODO: Fix -->
+            {#if !valid}
+            <div class="tooltip mx-4 bg-red" data-tip="Datasource is not compatible with this tile!">
+              <svg xmlns="http://www.w3.org/2000/svg" class="text-error h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+              </svg>
+            </div>
+            {/if}
+            
+          </div>
+          
           <InputField bind:value={data_3}>Data 3</InputField>
         </div> 
       </div>
@@ -133,7 +159,7 @@
     <ModalButton on:click={() => open = !open}>
       Close
     </ModalButton>
-    <ModalButton on:click={() => handleCreate()} type="primary">
+    <ModalButton disabled={!valid} on:click={() => handleCreate()} type="primary">
       { !update ? 'Create' : 'Update' }
     </ModalButton>
   </div>

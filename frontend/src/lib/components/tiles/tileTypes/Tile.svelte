@@ -6,6 +6,7 @@
   import { edit } from "../../../../stores/stores";
   import type { TileContentDTO } from "../../../api/dtos/TileDTOs";
   import { generateColors } from "./Utils"
+import { deleteTile } from "../../../api/api";
 
   const dispatch = createEventDispatcher();
 
@@ -35,6 +36,7 @@
   }
 
   const handleDelete = async () => {
+    await deleteTile(id)
     dispatch("delete", item.getWidget());
   };
 

@@ -20,6 +20,20 @@
         borderColor: 'rgb(75, 192, 192)',
       };
     }
+
+    if (type === "scatter") {
+      console.log(data)
+      data = {
+        value: {
+          labels: [],
+          numbers: data.value
+        }
+      }
+
+      options = {
+        backgroundColor: generateColors(data.value.numbers.length),
+      }
+    }
     
     render();
 
@@ -31,7 +45,7 @@
     chart = new Chart(canvas, {
       type,
       data: {
-        labels: data.value.labels,
+        labels: data.value.labels || [],
         datasets: [
           {
             backgroundColor: generateColors(data.value.labels.length),

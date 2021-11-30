@@ -31,6 +31,10 @@ export const updateTile = async (id: string, dto: TileDTO) => {
   return httpPut(`${base}/tile/${id}`, dto).then(res => res.json());
 }
 
+export const deleteTile = async (id: string) => {
+  return httpDelete(`${base}/tile/${id}`)
+}
+
 function httpGet(url: string) {
   return fetch(url);
 }
