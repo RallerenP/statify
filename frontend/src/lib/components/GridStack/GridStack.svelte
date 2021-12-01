@@ -12,14 +12,22 @@
   export let options: GridStackOptions = {};
   export let lock: boolean;
   export function removeWidget(widget) {
-    if (grid)
+    if (grid) {
       grid.removeWidget(widget, true)
+      grid.commit();
+    }
+      
   }
 
   export function reset() {
     if (!grid) return;
     grid.destroy(false);
     grid = GridStack.init(options);
+  }
+
+  export function compact() {
+    if (grid)
+      grid.compact();
   }
 
   let grid;
@@ -41,10 +49,20 @@
     dispatch('done');
   })
 
+  let render = true;
+
+  onDestroy(async () => {
+    render = false;
+    await tick();
+    grid.destroy(false);
+  })
+
 </script>
 
 <div class="grid-stack {klass}">
-  <slot></slot>
+  {#if render}
+    <slot></slot>
+  {/if}
 </div>
 
 <style lang="scss">

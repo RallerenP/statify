@@ -28,6 +28,8 @@
 
   const handleDelete = async (widget) => {
     gridstack.removeWidget(widget);
+    gridstack.compact();
+    await tick();
   }
 
   let deleteModalOpen = false;
@@ -37,10 +39,11 @@
   })
 
   async function update() {
+    loading = true;
+    tiles = [];
+    await tick()
     tiles = await getTiles($url);
     loading = false;
-    await tick()
-    if (gridstack) gridstack.reset();
   }
 
   $: if ($url) {
