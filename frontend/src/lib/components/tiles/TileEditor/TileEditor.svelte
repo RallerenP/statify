@@ -85,6 +85,8 @@
     get();
   }
 
+  get();
+
 </script>
 
 <Modal class="max-w-[1200px]" {open}>
