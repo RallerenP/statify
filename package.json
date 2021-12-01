@@ -1,0 +1,25 @@
+{
+  "name": "statify",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/RallerenP/statify.git",
+  "author": "RallerenP <17848169+RallerenP@users.noreply.github.com>",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "cypress:run": "cy2 run",
+    "cypress:record": "cy2 run --record --key somekey",
+    "cypress:open": "cypress open",
+    "compose:test": "docker-compose --env-file .env.testing up",
+    "compose:dev": "docker-compose --env-file .env.dev up"
+  },
+  "bin": {
+    "statify": "bin/statify.js"
+  },
+  "dependencies": {
+    "chalk": "^5.0.0",
+    "cy2": "^1.3.0",
+    "cypress": "^9.1.0",
+    "har-validator": "^5.1.5"
+  }
+}

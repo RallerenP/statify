@@ -1,3 +1,5 @@
+import { DataSourceDTO } from './../datasource.dto';
+import { TileTypes } from '../tile/schemas/tile.schema'
 import { Controller, Get } from '@nestjs/common';
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { RandomService } from './random.service';
@@ -11,21 +13,42 @@ export class RandomController {
    * Get a random number
    */
   @Get()
-  getRandom() {
+  getRandom(): DataSourceDTO {
     return {
       value: this.randomService.getRandom(),
       description: 'A random number',
+      compatible: [TileTypes.Number]
     };
   }
 
   /**
-   * Get 5 random numbers
+   * Get a random list of random labels & numbers, used for certain charts
    */
-  @Get('/array')
-  getRandomArray() {
+  @Get('/simpleChart')
+  getLabelsAndNumbers(): DataSourceDTO {
     return {
-      value: this.randomService.getRandomArray(),
-      description: 'An array of random numbers',
+      value: this.randomService.getLabelsAndNumbers(),
+      description: 'An object of an array with random labels, and an array of random numbers',
+      compatible: [ TileTypes.BarChart, TileTypes.LineChart, TileTypes.PieChart ]
     };
   }
+
+  @Get('/advancedChart')
+  getRandomScatterPoints(): DataSourceDTO {
+    return {
+      value: this.randomService.getRandomScatterPoints(),
+      description: 'An array of random scatter points objects',
+      compatible: [ TileTypes.ScatterChart ]
+    }
+  }
+
+  @Get('/onOff')
+  getRandomOnOff(): DataSourceDTO {
+    return {
+      value: this.randomService.getRandomOnOff(),
+      description: 'Show whether a service is offline or online',
+      compatible: [ TileTypes.OnOff ]
+    };
+  }
+
 }

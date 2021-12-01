@@ -1,9 +1,32 @@
-version: '3.9'
+version: "3.0"
+
 services:
-  statify:
-    build: .
+  mongo:
+    image: mongo
+    ports: 
+      - 27017:27017
+    volumes:
+      - ./exclude/mongo_data:/data/db:rw
+
+  backend:
+    image: node:14.18.1-buster
+    volumes:
+      - ./backend:/project:rw
+    command: npm run --prefix project ${CMD_BACK_END}
     ports:
-        - "3000:3000"
-        - "5000:5000"
+      - 3000:3000
+    depends_on:
+      - mongo
     environment:
-      - DB_URL=$DB_URL
+      - DB_URL=mongodb://mongo:27017/${DB_NAME}
+
+  frontend:
+    image: node:14.18.1-buster
+    volumes:
+      - ./frontend:/project:rw
+    command: npm run --prefix project ${CMD_FRONT_END} 
+    ports:
+      - "5000:5000"
+      - "4200:4200"
+    depends_on:
+      - backend

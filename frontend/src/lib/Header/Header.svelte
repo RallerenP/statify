@@ -27,7 +27,7 @@
                     </svg>
                 </div>
                 
-                <input type="checkbox" checked={$edit} class="toggle" on:change={() => $edit = !$edit}>
+                <input id="edit-toggle" type="checkbox" checked={$edit} class="toggle" on:change={() => $edit = !$edit}>
             </label>
             
         </div>

@@ -1,71 +1,66 @@
-import type { CreateStatTileDTO, StatTileDTO, UpdateTileDTO } from './dtos/TileDTOs';
 import type { CreateMenuItemDTO } from "./dtos/MenuDTOs";
+import type { CreateTileDTO, TileDTO } from "./dtos/TileDTOs";
 
-const base = "http://localhost:3000";
+const base = `${window.location.protocol}//${window.location.hostname}:3000`;
 
 export const getAllMenus = async () => {
-  return fetch(`${base}/menu`).then(res => res.json());
+  return httpGet(`${base}/menu`).then(res => res.json());
 }
 
 export const getMenuItem = async (url: string) => {
-  return fetch(`${base}/menu${url}`).then(res => res.json());
+  return httpGet(`${base}/menu${url}`).then(res => res.json());
 }
 
 export const createNewMenuItem = async (dto: CreateMenuItemDTO, url: string) => {
-  return fetch(`${base}/menu${url}`, {
-    method: 'POST',
-    body: JSON.stringify(dto),
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
-  }).then(res => res.json())
+  return httpPost(`${base}/menu${url}`, dto).then(res => res.json())
 }
 
 export const deleteMenuItem = async (url: string) => {
-  return fetch(`${base}/menu${url}`, { method: 'DELETE' });
+  return httpDelete(`${base}/menu${url}`);
 }
 
 export const getTiles = async (url: string) => {
-  return fetch(`${base}/tile${url}`).then(res => res.json());
+  return httpGet(`${base}/tile${url}`).then(res => res.json());
 }
 
-export const updateTile = async (id: string, dto: UpdateTileDTO) => {
-  return fetch(`${base}/tile/${id}`, {
-    method: 'PUT',
-    body: JSON.stringify(dto),
+export const createTile = async (url: string, dto: CreateTileDTO) => {
+  return httpPost(`${base}/tile${url}`, dto)
+}
+
+export const updateTile = async (id: string, dto: TileDTO) => {
+  return httpPut(`${base}/tile/${id}`, dto).then(res => res.json());
+}
+
+export const deleteTile = async (id: string) => {
+  return httpDelete(`${base}/tile/${id}`)
+}
+
+function httpGet(url: string) {
+  return fetch(url);
+}
+
+function httpPost(url: string, body: any) {
+  return fetch(url, {
+    method: 'POST',
+    body: JSON.stringify(body),
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
-  }).then(res => res.json());
-}
-
-export const deleteStat = async (id: string) => {
-  return fetch(`${base}/stat-tile/${id}`, {
-    method: 'DELETE'
   })
 }
 
-export const updateStat = async (id: string, dto: Partial<StatTileDTO>) => {
-  return fetch(`${base}/stat-tile/${id}`, {
+function httpPut(url: string, body: any) {
+  return fetch(url, {
     method: 'PUT',
-    body: JSON.stringify(dto),
+    body: JSON.stringify(body),
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
-  }).then(res => res.json());
-}
+  })
+};
 
-export const createStat = async (url: string, dto: CreateStatTileDTO) => {
-  return fetch(`${base}/stat-tile${url}`, {
-    method: 'POST',
-    body: JSON.stringify(dto),
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
-  }).then(res => res.json());
+function httpDelete(url: string) {
+  return fetch(url, { method: 'delete' })
 }
-
