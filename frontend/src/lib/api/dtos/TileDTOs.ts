@@ -20,6 +20,7 @@ export interface TileDTO {
 export interface TileContentDTO {
   label: string,
   dataSource: string
+  description: string;
 }
 
 export interface CreateTileDTO extends Omit<TileDTO, '_id'> {}
