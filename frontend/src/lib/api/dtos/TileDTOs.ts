@@ -5,6 +5,9 @@ export enum TileTypes {
   'LineChart' = 'LINE_CHART',
   'ScatterChart' = 'SCATTER_CHART',
   'OnOff' = 'ON_OFF',
+  'Divider' = 'DIVIDER',
+  'Header' = 'HEADER',
+  'Description' = 'DESCRIPTION'
 }
 
 export interface TileDTO {

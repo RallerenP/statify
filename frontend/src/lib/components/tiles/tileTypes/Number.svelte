@@ -1,10 +1,6 @@
 <script lang="ts">
-  import GridStackItem from "../../GridStack/GridStackItem.svelte";
-  import { onMount, createEventDispatcher } from 'svelte';
-  import Spinner from "../../../Spinner.svelte";
-  import { edit } from "../../../../stores/stores";
-  import type { TileContentDTO } from "../../../api/dtos/TileDTOs";
-import Loader from "../../../Loader.svelte";
+  import { onMount } from 'svelte';
+  import Loader from "../../../Loader.svelte";
 
   export let dataSource;
 

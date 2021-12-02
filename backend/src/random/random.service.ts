@@ -64,9 +64,9 @@ const listOfCountries = [
 let generateFiveRandomCountries = () => {
   let countries = []
   for (let i = 0; i < 5; i++) {
-    let random = Math.round(Math.random() * 10)
+    let random = Math.round(Math.random() * 9)
     while (countries.includes(listOfCountries[random])) {
-      random = Math.round(Math.random() * 10)
+      random = Math.round(Math.random() * 9)
     }
     countries.push(listOfCountries[random])
   }

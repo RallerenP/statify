@@ -5,6 +5,10 @@ import { createEventDispatcher } from 'svelte';
 import OnOff from "./tileTypes/OnOff.svelte";
 import Chart from "./tileTypes/Chart.svelte";
 import Tile from './tileTypes/Tile.svelte';
+import Divider from "./tileTypes/Divider.svelte";
+import Header from "./tileTypes/Header.svelte";
+import Description from "./tileTypes/Description.svelte";
+import Content from "../../Content.svelte";
 
   const dispatch = createEventDispatcher();
 
@@ -24,6 +28,7 @@ import Tile from './tileTypes/Tile.svelte';
     content={tile.content}
     on:delete
     on:update={(e) => handleUpdate(tile, e.detail)}
+    tileType={tile.type}
   >
   {#if tile.type === TileTypes.Number}
     <Number dataSource={tile.content.dataSource}></Number>
@@ -37,6 +42,12 @@ import Tile from './tileTypes/Tile.svelte';
     <Chart type="scatter" dataSource={tile.content.dataSource}></Chart>   
   {:else if tile.type === TileTypes.OnOff}
     <OnOff dataSource={tile.content.dataSource} />
+  {:else if tile.type === TileTypes.Divider}
+    <Divider/>
+  {:else if tile.type === TileTypes.Header}
+    <Header title={tile.content}/>
+  {:else if tile.type === TileTypes.Description}
+    <Description content={tile.content}/>
   {/if}
   </Tile>
 

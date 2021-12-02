@@ -1,12 +1,13 @@
 <script lang="ts">
   import { TileTypes } from "../../../../api/dtos/TileDTOs";
-import BarChartPreview from "./BarChartPreview.svelte";
-import LineChartPreview from "./LineChartPreview.svelte";
-import OnOffPreview from "./OnOffPreview.svelte";
+  import BarChartPreview from "./BarChartPreview.svelte";
+  import LineChartPreview from "./LineChartPreview.svelte";
+  import OnOffPreview from "./OnOffPreview.svelte";
 
   import PieChartPreview from "./PieChartPreview.svelte";
-import ScatterChartPreview from "./ScatterChartPreview.svelte";
+  import ScatterChartPreview from "./ScatterChartPreview.svelte";
   import StatTilePreview from "./StatTilePreview.svelte";
+  import UiPreview from "./UIPreview.svelte";
 
   export let title;
   export let tileType: TileTypes;
@@ -29,6 +30,8 @@ import ScatterChartPreview from "./ScatterChartPreview.svelte";
         <ScatterChartPreview {value}/>
     {:else if tileType === TileTypes.OnOff}
         <OnOffPreview {value}/>
+    {:else if tileType === TileTypes.Divider || TileTypes.Header || TileTypes.Description}
+        <UiPreview type={value}/>
     {/if}
   </div>
 </div>
