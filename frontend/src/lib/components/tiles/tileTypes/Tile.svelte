@@ -24,6 +24,7 @@
   onMount(async () => {
     response = await fetch(content.dataSource).then(res => res.json());
     loading = false;
+    console.log(tileType)
   });
 
   const handleKeypress = async (e) => {
@@ -77,7 +78,6 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
               </svg>
             </span>
-            <!-- TODO: make use of Description & Divider aswell -->
             <input
               class="stat-title bg-transparent flex-shrink w-3/4" 
               value={content.label} 
@@ -92,7 +92,7 @@
           </label>
           {:else}
           <!-- TODO: make use of Description & Divider aswell -->
-          {#if tileType !== TileTypes.Header}
+          {#if tileType !== TileTypes.Header && tileType !== TileTypes.Divider && tileType !== TileTypes.Description }
           <div class="flex">
             <div class="stat-title h-[20px]">{content.label}</div>
             <div class="flex-grow"></div>
