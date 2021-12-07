@@ -55,7 +55,7 @@
   let open = false;
 </script>
 
-<div class="h-[48px] my-1 rounded flex" style="margin-left: {depth * 25}px">
+<div id={item._id} class="h-[48px] my-1 rounded flex" style="margin-left: {depth * 25}px">
   {#if item.children.length || $edit}
   <button class="btn btn-primary w-[48px] btn-ghost flex-grow-0 duration-200" on:click={() => open = !open}>
     {#if !open}
@@ -107,7 +107,7 @@
     <TreeListItem item={child} depth={depth + 1} on:delete={() => refresh()}></TreeListItem>
   {/each}
   {#if $edit}
-    <div class="h-[48px] my-1 rounded flex" style="margin-left: {(depth + 1) * 25}px">
+    <div id="" class="h-[48px] my-1 rounded flex" style="margin-left: {(depth + 1) * 25}px">
       <div class="w-[48px] h-[48px] flex justify-center items-center flex-shrink-0 flex-grow-0 duration-200">
         {#if loading}
           <Spinner class="before:h-4 before:w-4" />
