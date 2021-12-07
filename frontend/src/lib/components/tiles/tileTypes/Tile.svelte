@@ -4,9 +4,9 @@
   import Spinner from "../../../Spinner.svelte";
   import Chart from "chart.js/auto";
   import { edit } from "../../../../stores/stores";
-  import type { TileContentDTO } from "../../../api/dtos/TileDTOs";
+  import { TileContentDTO, TileTypes } from "../../../api/dtos/TileDTOs";
   import { generateColors } from "./Utils"
-import { deleteTile } from "../../../api/api";
+  import { deleteTile } from "../../../api/api";
 
   const dispatch = createEventDispatcher();
 
@@ -14,6 +14,7 @@ import { deleteTile } from "../../../api/api";
   export let gridOptions: { w: number; h: number; x: number; y: number };
   export let content: TileContentDTO;
   export let widget = {};
+  export let tileType
   let loading: boolean = true;
   let item;
   let response;
@@ -23,6 +24,7 @@ import { deleteTile } from "../../../api/api";
   onMount(async () => {
     response = await fetch(content.dataSource).then(res => res.json());
     loading = false;
+    console.log(tileType)
   });
 
   const handleKeypress = async (e) => {
@@ -76,7 +78,7 @@ import { deleteTile } from "../../../api/api";
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
               </svg>
             </span>
-            <input 
+            <input
               class="stat-title bg-transparent flex-shrink w-3/4" 
               value={content.label} 
               on:keypress="{(e) => handleKeypress(e)}"
@@ -89,6 +91,8 @@ import { deleteTile } from "../../../api/api";
             </button>
           </label>
           {:else}
+          <!-- TODO: make use of Description & Divider aswell -->
+          {#if tileType !== TileTypes.Header && tileType !== TileTypes.Divider && tileType !== TileTypes.Description }
           <div class="flex">
             <div class="stat-title h-[20px]">{content.label}</div>
             <div class="flex-grow"></div>
@@ -98,7 +102,7 @@ import { deleteTile } from "../../../api/api";
               </svg>
             </div>
           </div>
-          
+          {/if}
         {/if}
         <div class="flex flex-grow justify-center items-center {$edit && 'pointer-events-none'}">
           <div class="h-[90%] w-[90%]"><slot></slot></div>

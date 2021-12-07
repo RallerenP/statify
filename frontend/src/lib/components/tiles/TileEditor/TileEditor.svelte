@@ -16,12 +16,15 @@
 
   let label = 'default'
   let dataSource = 'http://localhost:3000/random'
-  let data_3 = 'Something'
+  let description = 'A very descriptive description'
   let value: any = 5000
   let tileType: TileTypes = TileTypes.Number
   let valid = false;
   export let open;
   export let update = false;
+  let titleIsDisabled = false
+  let dataSourceIsDisabled = false
+  let descriptionIsDisabled = true
 
   const handleDataSourceChange = (e: KeyboardEvent) => {
     if (e.key === "Enter") get();
@@ -34,7 +37,7 @@
       if (data.compatible.includes(tileType)) valid = true;
       else valid = false;
 
-      value = data.value;
+      value = data.value; 
     } catch(e) {
       valid = false;
     }
@@ -57,19 +60,23 @@
     },
   }
 
-  $: console.log(open)
-
   const handleCreate = async () => {
     console.log(label, dataSource, tileType)
+    let width = 2;
+    let height = 2;
+    if (tileType === TileTypes.Divider) { width = 12; height = 1}
+    if (tileType === TileTypes.Header) { width = 3; height = 1}
+    if (tileType === TileTypes.Description) { width = 6; height = 2}
     await createTile($url, {
-      width: 2,
-      height: 2,
+      width,
+      height,
       x: 0,
       y: 0,
       type: tileType,
       content: {
         label,
-        dataSource
+        dataSource,
+        description
       }
     })
 
@@ -77,10 +84,13 @@
     open = false;
   }
 
-
   const handleTileTypeSelect = (type: TileTypes, _value: any) => {
     tileType = type;
     value = _value;
+    if (tileType === TileTypes.Divider) { titleIsDisabled = true; dataSourceIsDisabled = true; descriptionIsDisabled = true}
+    else if (tileType === TileTypes.Header) { titleIsDisabled = false; dataSourceIsDisabled = true; descriptionIsDisabled = true}
+    else if (tileType === TileTypes.Description) { titleIsDisabled = false; dataSourceIsDisabled = true; descriptionIsDisabled = false}
+    else { dataSourceIsDisabled = false; descriptionIsDisabled = true}
 
     get();
   }
@@ -96,9 +106,9 @@
       <div class="w-1/2">
         <span class="text-[18px]">Settings</span>
         <div class="form-control mt-2">
-          <InputField bind:value={label}>Title</InputField>
+          <InputField bind:value={label} disabled={titleIsDisabled}>Title</InputField>
           <div class="my-4 flex items-center">
-            <InputField class="flex-shrink-0" on:keydown={handleDataSourceChange} bind:value={dataSource}>Data Source</InputField>
+            <InputField class="flex-shrink-0" on:keydown={handleDataSourceChange} bind:value={dataSource} disabled={dataSourceIsDisabled}>Data Source</InputField>
             <!-- TODO: Fix -->
             {#if !valid}
             <div class="tooltip mx-4 bg-red" data-tip="Datasource is not compatible with this tile!">
@@ -110,7 +120,7 @@
             
           </div>
           
-          <InputField bind:value={data_3}>Data 3</InputField>
+          <InputField bind:value={description} disabled={descriptionIsDisabled}>Description</InputField>
         </div> 
       </div>
       <div class="w-1/2 flex flex-col">
@@ -153,6 +163,21 @@
       <SplideSlide class="flex-center splide__slide is-active is-visible">
         <div class="w-full h-full p-8">
           <TilePreview on:click={() => handleTileTypeSelect(TileTypes.OnOff, true) } title='On Off Tile' tileType={TileTypes.OnOff} value={true}/>
+        </div>
+      </SplideSlide>
+      <SplideSlide class="flex-center splide__slide is-active is-visible">
+        <div class="w-full h-full p-8">
+          <TilePreview on:click={() => {handleTileTypeSelect(TileTypes.Divider, true);} } title={`UI - Divider`} tileType={TileTypes.Divider} value={TileTypes.Divider}/>
+        </div>
+      </SplideSlide>
+      <SplideSlide class="flex-center splide__slide is-active is-visible">
+        <div class="w-full h-full p-8">
+          <TilePreview on:click={() => {handleTileTypeSelect(TileTypes.Header, true);} } title={`UI - Header`} tileType={TileTypes.Header} value={TileTypes.Header}/>
+        </div>
+      </SplideSlide>
+      <SplideSlide class="flex-center splide__slide is-active is-visible">
+        <div class="w-full h-full p-8">
+          <TilePreview on:click={() => {handleTileTypeSelect(TileTypes.Description, true);} } title={`UI - Header & Description`} tileType={TileTypes.Description} value={TileTypes.Description}/>
         </div>
       </SplideSlide>
     </Splide>

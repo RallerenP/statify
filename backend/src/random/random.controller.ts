@@ -51,4 +51,13 @@ export class RandomController {
     };
   }
 
+  @Get('/ui')
+  getUi(): DataSourceDTO {
+    return {
+      value: -1,
+      description: 'A very descriptive description',
+      compatible: [ TileTypes.Divider, TileTypes.Header, TileTypes.Description ]
+    }
+  }
+
 }
