@@ -56,7 +56,7 @@ export class RandomController {
     return {
       value: -1,
       description: 'A very descriptive description',
-      compatible: [ TileTypes.Divider, TileTypes.Header, TileTypes.Description]
+      compatible: [ TileTypes.Divider, TileTypes.Header, TileTypes.Description ]
     }
   }
 

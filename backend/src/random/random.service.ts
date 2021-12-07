@@ -6,10 +6,6 @@ export class RandomService {
     return Math.round(Math.random() * 10000);
   }
 
-  getRandomArray() {
-    return [generateRandomNumber(), generateRandomNumber(), generateRandomNumber(), generateRandomNumber(), generateRandomNumber()]
-  }
-
   getLabelsAndNumbers() {
     // Labels, numbers
     return {
