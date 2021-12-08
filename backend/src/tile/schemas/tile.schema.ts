@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Mongoose, RefType, Types } from 'mongoose';
+import { Document, Mongoose, RefType, Schema as _Schema } from 'mongoose';
 
 export type TileDocument = Tile & Document;
 
@@ -27,6 +27,18 @@ export enum TileTypes {
 }
 
 @Schema()
+export class Content {
+  @Prop({ required: true })
+  label: string;
+  
+  @Prop({ required: true })
+  dataSource: string
+
+  @Prop({ required: true })
+  type: string;
+}
+
+@Schema()
 export class Tile {
   @Prop({ required: true })
   url: string;
@@ -43,14 +55,10 @@ export class Tile {
   @Prop({ required: true })
   y: number;
 
-  @Prop({ required: true, enum: TileTypes })
-  type: string;
-
-  @Prop({ refPath: 'type', type: Types.ObjectId })
-  content: {
-    label: string;
-    dataSource: string;
-  };
+  @Prop({ required: true })
+  content: Content[]
 }
+
+
 
 export const TileSchema = SchemaFactory.createForClass(Tile);

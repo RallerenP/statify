@@ -13,7 +13,7 @@ export class TileService {
   ) {}
 
   async create(url: string, dto: CreateTileDTO) {
-    const { width, height, x, y, type, content } = dto;
+    const { width, height, x, y, content } = dto;
 
     const created = new this.tileModel({
       url,
@@ -21,7 +21,6 @@ export class TileService {
       height,
       x,
       y,
-      type,
       content,
     });
 

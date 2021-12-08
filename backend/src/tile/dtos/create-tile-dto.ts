@@ -1,5 +1,6 @@
 import { Type } from 'class-transformer';
-import { IsNotEmpty, IsUrl, ValidateNested } from 'class-validator';
+import { IsEnum, IsNotEmpty, IsUrl, ValidateNested } from 'class-validator';
+import { TileTypes } from '../schemas/tile.schema';
 
 class CreateTileContentDTO {
   @IsNotEmpty()
@@ -7,6 +8,9 @@ class CreateTileContentDTO {
 
   @IsUrl({ require_tld: false })
   dataSource: string;
+
+  @IsEnum(TileTypes)
+  type: TileTypes;
 }
 
 
@@ -22,9 +26,6 @@ export class CreateTileDTO {
 
   @IsNotEmpty()
   y: number;
-
-  @IsNotEmpty()
-  type: string;
 
   @IsNotEmpty()
   @ValidateNested()

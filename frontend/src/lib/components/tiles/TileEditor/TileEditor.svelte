@@ -72,12 +72,12 @@
       height,
       x: 0,
       y: 0,
-      type: tileType,
-      content: {
+      content: [{
         label,
         dataSource,
-        description
-      }
+        description,
+        type: tileType,
+      }]
     })
 
     dispatch('created');

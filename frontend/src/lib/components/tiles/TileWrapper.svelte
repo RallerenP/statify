@@ -25,30 +25,8 @@ import Content from "../../Content.svelte";
   <Tile
     id={tile._id}
     gridOptions={{ w: tile.width, h: tile.height, x: tile.x, y: tile.y }}
-    content={tile.content}
+    dto={tile.content}
     on:delete
     on:update={(e) => handleUpdate(tile, e.detail)}
-    tileType={tile.type}
-  >
-  {#if tile.type === TileTypes.Number}
-    <Number dataSource={tile.content.dataSource}></Number>
-  {:else if tile.type === TileTypes.PieChart}
-    <Chart type="pie" dataSource={tile.content.dataSource}></Chart>
-  {:else if tile.type === TileTypes.LineChart}
-    <Chart type="line" dataSource={tile.content.dataSource}></Chart>
-  {:else if tile.type === TileTypes.BarChart}
-    <Chart type="bar" dataSource={tile.content.dataSource}></Chart>
-  {:else if tile.type === TileTypes.ScatterChart}
-    <Chart type="scatter" dataSource={tile.content.dataSource}></Chart>   
-  {:else if tile.type === TileTypes.OnOff}
-    <OnOff dataSource={tile.content.dataSource} />
-  {:else if tile.type === TileTypes.Divider}
-    <Divider/>
-  {:else if tile.type === TileTypes.Header}
-    <Header title={tile.content}/>
-  {:else if tile.type === TileTypes.Description}
-    <Description content={tile.content}/>
-  {/if}
-  </Tile>
-
+  />
 {/each}

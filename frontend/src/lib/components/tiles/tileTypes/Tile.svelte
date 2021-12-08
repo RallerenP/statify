@@ -3,28 +3,41 @@
   import { onMount, createEventDispatcher, tick } from "svelte";
   import Spinner from "../../../Spinner.svelte";
   import Chart from "chart.js/auto";
+  import Number from "./Number.svelte";
+  import ChartComponent from './Chart.svelte'
   import { edit } from "../../../../stores/stores";
-  import { TileContentDTO, TileTypes } from "../../../api/dtos/TileDTOs";
+  import type { TileContentDTO } from "../../../api/dtos/TileDTOs";
+  import { TileTypes } from  '../../../api/dtos/TileDTOs'
   import { generateColors } from "./Utils"
   import { deleteTile } from "../../../api/api";
+  import OnOff from "./OnOff.svelte";
+  import Divider from "./Divider.svelte";
+  import Header from "./Header.svelte";
+  import Description from "./Description.svelte";
+import TileTypeIcon from "./TileTypeIcon.svelte";
 
   const dispatch = createEventDispatcher();
 
   export let id;
   export let gridOptions: { w: number; h: number; x: number; y: number };
-  export let content: TileContentDTO;
+  export let dto: TileContentDTO[];
   export let widget = {};
-  export let tileType
+  
   let loading: boolean = true;
   let item;
-  let response;
+  let content: { type: TileTypes, data: { value: any, description: string }}[] = [];
   let chart;
   let canvas;
+  let selected: { type: TileTypes, data: { value: any, description: string }};
+  let index = 0;
+
+  $: selected = content[index];
 
   onMount(async () => {
-    response = await fetch(content.dataSource).then(res => res.json());
+    content = await Promise.all(dto.map(async (content) => { return { type: content.type, data: await fetch(content.dataSource).then(res => res.json()) } } ) )
+    console.log(content);
+    selected = content[0];
     loading = false;
-    console.log(tileType)
   });
 
   const handleKeypress = async (e) => {
@@ -34,40 +47,19 @@
 
     e.target.blur();
 
-    dispatch('update', { ...content, ...dto })
+    dispatch('update', { ...dto, ...dto })
   }
 
   const handleDelete = async () => {
     await deleteTile(id)
     dispatch("delete", item.getWidget());
   };
-
-  $: if (canvas) render();
-
-  function render(animate = true) {
-    if (chart !== undefined) chart.destroy();
-    chart = new Chart(canvas, {
-      type: 'pie',
-      data: {
-        labels: response.value.labels,
-        datasets: [
-          {
-            backgroundColor: generateColors(response.value.numbers.length),
-            data: response.value.numbers,
-          },
-        ],
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-      },
-    });
-  }
 </script>
 
 <GridStackItem bind:this={item} {id} class="max-h-full" width={gridOptions.w} height={gridOptions.h} x={gridOptions.x} y={gridOptions.y}>
   <div class=" h-full w-full">
     <div class="p-4 rounded-box bg-base-200 {$edit && 'transition-colors hover:bg-base-300 cursor-pointer'} h-full flex flex-col">
+      
       {#if loading}
         <Spinner />
       {:else}
@@ -80,7 +72,7 @@
             </span>
             <input
               class="stat-title bg-transparent flex-shrink w-3/4" 
-              value={content.label} 
+              value={dto[index].label} 
               on:keypress="{(e) => handleKeypress(e)}"
             >
             <button on:click={() => handleDelete() }
@@ -91,12 +83,17 @@
             </button>
           </label>
           {:else}
-          <!-- TODO: make use of Description & Divider aswell -->
-          {#if tileType !== TileTypes.Header && tileType !== TileTypes.Divider && tileType !== TileTypes.Description }
+          {#if selected.type !== TileTypes.Header && selected.type !== TileTypes.Divider && selected.type !== TileTypes.Description }
           <div class="flex">
-            <div class="stat-title h-[20px]">{content.label}</div>
+            <div class="stat-title h-[20px]">{dto[index].label}</div>
             <div class="flex-grow"></div>
-            <div title="{response.description}">
+            {#each dto as item, _index}
+              <span title={dto[_index].label} class="mx-1" on:click={() => index = _index}>
+                <TileTypeIcon type={dto[_index].type} />
+              </span>
+            {/each}
+            <div></div>
+            <div title="{selected.data.description}">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
@@ -105,7 +102,27 @@
           {/if}
         {/if}
         <div class="flex flex-grow justify-center items-center {$edit && 'pointer-events-none'}">
-          <div class="h-[90%] w-[90%]"><slot></slot></div>
+          <div class="h-[90%] w-[90%]">
+            {#if selected.type === TileTypes.Number}
+              <Number dataSource={dto[0].dataSource}></Number>
+            {:else if selected.type === TileTypes.PieChart}
+              <ChartComponent type="pie" data={content[index].data}></ChartComponent>
+            {:else if selected.type === TileTypes.LineChart}
+              <ChartComponent type="line" data={content[index].data}></ChartComponent>
+            {:else if selected.type === TileTypes.BarChart}
+              <ChartComponent type="bar" data={content[index].data}></ChartComponent>
+            {:else if selected.type === TileTypes.ScatterChart}
+              <ChartComponent type="scatter" data={content[index].data}></ChartComponent>   
+            {:else if selected.type === TileTypes.OnOff}
+              <OnOff dataSource={dto[index].dataSource} />
+            {:else if selected.type === TileTypes.Divider}
+              <Divider/>
+            {:else if selected.type === TileTypes.Header}
+              <Header title={dto[index]}/>
+            {:else if selected.type === TileTypes.Description}
+              <Description content={dto[index]}/>
+            {/if}
+          </div>
         </div>
       {/if}
     </div>

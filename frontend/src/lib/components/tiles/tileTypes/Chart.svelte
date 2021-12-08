@@ -3,16 +3,16 @@
   import { generateColors } from "./Utils"
   import { onMount } from "svelte";
 
-  export let dataSource;
+  // export let dataSource;
   export let type: "bar" | "line" | "scatter" | "bubble" | "pie" | "doughnut" | "polarArea" | "radar"
 
   let canvas;
   let chart;
-  let data: any;
+  export let data: any;
   let options: any;
 
   onMount(async () => {
-    data = await fetch(dataSource).then(res => res.json());
+    // data = await fetch(dataSource).then(res => res.json());
 
     if (type === "line") {
       options = { 

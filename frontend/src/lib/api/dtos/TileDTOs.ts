@@ -16,14 +16,14 @@ export interface TileDTO {
   y: number,
   width: number,
   height: number,
-  type: TileTypes, 
-  content: TileContentDTO
+  content: TileContentDTO[]
 }
 
 export interface TileContentDTO {
   label: string,
   dataSource: string
   description: string;
+  type: TileTypes, 
 }
 
 export interface CreateTileDTO extends Omit<TileDTO, '_id'> {}

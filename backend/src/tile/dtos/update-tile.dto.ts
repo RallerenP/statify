@@ -1,5 +1,6 @@
 import { Type } from 'class-transformer';
-import { IsNotEmpty, IsOptional, IsUrl, ValidateNested } from 'class-validator';
+import { IsArray, IsEnum, IsNotEmpty, IsOptional, IsUrl, ValidateNested } from 'class-validator';
+import { TileTypes } from '../schemas/tile.schema';
 
 
 class UpdateTileContentDTO {
@@ -8,6 +9,9 @@ class UpdateTileContentDTO {
 
   @IsUrl({ require_tld: false })
   dataSource: string;
+
+  @IsEnum(TileTypes)
+  type: TileTypes
 }
 
 
@@ -22,6 +26,7 @@ export class UpdateTileDTO {
 
   @IsOptional()
   @ValidateNested()
+  @IsArray()
   @Type(() => UpdateTileContentDTO)
-  content?: UpdateTileContentDTO;
+  content?: UpdateTileContentDTO[];
 }
