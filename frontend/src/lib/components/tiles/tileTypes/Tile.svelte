@@ -104,7 +104,7 @@ import TileTypeIcon from "./TileTypeIcon.svelte";
         <div class="flex flex-grow justify-center items-center {$edit && 'pointer-events-none'}">
           <div class="h-[90%] w-[90%]">
             {#if selected.type === TileTypes.Number}
-              <Number dataSource={dto[0].dataSource}></Number>
+              <Number dataSource={dto[index].dataSource}></Number>
             {:else if selected.type === TileTypes.PieChart}
               <ChartComponent type="pie" data={content[index].data}></ChartComponent>
             {:else if selected.type === TileTypes.LineChart}

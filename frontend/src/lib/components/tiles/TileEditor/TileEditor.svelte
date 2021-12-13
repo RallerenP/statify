@@ -7,24 +7,37 @@
   import { Splide, SplideSlide } from '@splidejs/svelte-splide';
   import '@splidejs/splide/dist/css/splide.min.css';
   import { url } from '../../../../stores/stores';
-  import { createEventDispatcher } from 'svelte';
-  import { TileTypes } from "../../../api/dtos/TileDTOs";
+  import { createEventDispatcher, tick } from 'svelte';
+  import { TileContentDTO, TileTypes } from "../../../api/dtos/TileDTOs";
   import { createTile } from "../../../api/api";
   import type { DataSourceDTO } from "../../../api/dtos/DataSourceDTO";
+import EditorTabs from "./EditorTabs.svelte";
 
   let dispatch = createEventDispatcher();
 
-  let label = 'default'
-  let dataSource = 'http://localhost:3000/random'
-  let description = 'A very descriptive description'
+  
   let value: any = 5000
-  let tileType: TileTypes = TileTypes.Number
   let valid = false;
-  export let open;
+  export let open = true;
   export let update = false;
   let titleIsDisabled = false
   let dataSourceIsDisabled = false
   let descriptionIsDisabled = true
+
+  const defaultTab: TileContentDTO = {
+    label: 'Default',
+    dataSource: 'http://localhost:3000/random',
+    description: 'A very description',
+    type: TileTypes.Number
+  }
+  
+  let tabs: TileContentDTO[] = [ { ...defaultTab } ];
+  let activeTab = tabs[0]
+
+  let label = activeTab.label
+  let dataSource = activeTab.dataSource
+  let description = activeTab.description;
+  let tileType = activeTab.type;
 
   const handleDataSourceChange = (e: KeyboardEvent) => {
     if (e.key === "Enter") get();
@@ -61,7 +74,6 @@
   }
 
   const handleCreate = async () => {
-    console.log(label, dataSource, tileType)
     let width = 2;
     let height = 2;
     if (tileType === TileTypes.Divider) { width = 12; height = 1}
@@ -72,12 +84,7 @@
       height,
       x: 0,
       y: 0,
-      content: [{
-        label,
-        dataSource,
-        description,
-        type: tileType,
-      }]
+      content: tabs
     })
 
     dispatch('created');
@@ -97,42 +104,83 @@
 
   get();
 
+  const handleCreateTab = async () => {
+    const newTab: TileContentDTO = { ...defaultTab }
+    tabs = [ ...tabs, newTab ]
+    await tick();
+    activeTab = tabs[tabs.length - 1];
+
+    handleChangeTab({ detail: newTab })
+  }
+
+  const handleChangeTab = (e) => {
+    const tab = e.detail as TileContentDTO;
+
+    label = tab.label;
+    dataSource = tab.dataSource;
+    description = tab.description;
+    tileType = tab.type
+  }
+
+  $: {
+    activeTab.label = label
+    tabs = [...tabs]
+  };
+
+  $: {
+    activeTab.dataSource = dataSource
+    tabs = [...tabs]
+  };
+
+  $: {
+    activeTab.type = tileType
+    tabs = [...tabs]
+  };
+
+
+
 </script>
 
 <Modal class="max-w-[1200px]" {open}>
   <ModalTitle>Create new tile</ModalTitle>
   <div class="h-full w-full flex-grow">
-    <div class="flex">
-      <div class="w-1/2">
-        <span class="text-[18px]">Settings</span>
-        <div class="form-control mt-2">
-          <InputField bind:value={label} disabled={titleIsDisabled}>Title</InputField>
-          <div class="my-4 flex items-center">
-            <InputField class="flex-shrink-0" on:keydown={handleDataSourceChange} bind:value={dataSource} disabled={dataSourceIsDisabled}>Data Source</InputField>
-            <!-- TODO: Fix -->
-            {#if !valid}
-            <div class="tooltip mx-4 bg-red" data-tip="Datasource is not compatible with this tile!">
-              <svg xmlns="http://www.w3.org/2000/svg" class="text-error h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
-              </svg>
+    <EditorTabs bind:active={activeTab} tabs={tabs} on:create={handleCreateTab} on:change={handleChangeTab} />
+    <div class="border-2 border-base-200 p-2 rounded-b-lg rounded-tr-lg">
+      <div class="flex p-2">
+        <div class="w-1/2">
+          <span class="text-[18px]">Settings</span>
+          <div class="form-control mt-2">
+            <InputField bind:value={label} disabled={titleIsDisabled}>Title</InputField>
+            <div class="my-4 flex items-center">
+              <InputField class="flex-shrink-0" on:keydown={handleDataSourceChange} bind:value={dataSource} disabled={dataSourceIsDisabled}>Data Source</InputField>
+              <!-- TODO: Fix -->
+              {#if !valid}
+              <div class="tooltip mx-4 bg-red" data-tip="Datasource is not compatible with this tile!">
+                <svg xmlns="http://www.w3.org/2000/svg" class="text-error h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                </svg>
+              </div>
+              {/if}
+              
             </div>
-            {/if}
             
+            <InputField bind:value={description} disabled={descriptionIsDisabled}>Description</InputField>
+          </div> 
+        </div>
+        <div class="w-1/2 flex flex-col">
+          <div class="flex">
+            <span class="text-[18px] mb-2">Preview</span>
+            <div class="flex-grow"></div>
+          </div>
+          <div class="h-full bg-base-100 p-4 rounded">
+            <TilePreview {value} {tileType} title={label}></TilePreview>
           </div>
           
-          <InputField bind:value={description} disabled={descriptionIsDisabled}>Description</InputField>
-        </div> 
-      </div>
-      <div class="w-1/2 flex flex-col">
-        <div class="flex">
-          <span class="text-[18px] mb-2">Preview</span>
-          <div class="flex-grow"></div>
         </div>
-        <TilePreview {value} {tileType} title={label}></TilePreview>
       </div>
     </div>
   </div>
-  <div class="mt-16">
+  <div class="mt-4">
     <span class="text-[18px]">Tile Selector</span>
     <Splide options={options}>
       <SplideSlide class="flex-center splide__slide is-active is-visible">
