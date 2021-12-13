@@ -1,5 +1,5 @@
 <script lang="ts">
-import { TileDTO, TileTypes } from "../../api/dtos/TileDTOs";
+import type { TileDTO } from "../../api/dtos/TileDTOs";
 import Number from "./tileTypes/Number.svelte";
 import { createEventDispatcher } from 'svelte';
 import OnOff from "./tileTypes/OnOff.svelte";
@@ -28,5 +28,6 @@ import Content from "../../Content.svelte";
     dto={tile.content}
     on:delete
     on:update={(e) => handleUpdate(tile, e.detail)}
+    {tile}
   />
 {/each}

@@ -17,6 +17,7 @@ export interface TileDTO {
   width: number,
   height: number,
   content: TileContentDTO[]
+  link?: string
 }
 
 export interface TileContentDTO {

@@ -1,5 +1,5 @@
 import { Type } from 'class-transformer';
-import { IsEnum, IsNotEmpty, IsUrl, ValidateNested } from 'class-validator';
+import { IsEnum, IsNotEmpty, IsOptional, IsUrl, ValidateNested } from 'class-validator';
 import { TileTypes } from '../schemas/tile.schema';
 
 class CreateTileContentDTO {
@@ -31,4 +31,7 @@ export class CreateTileDTO {
   @ValidateNested()
   @Type(() => CreateTileContentDTO)
   content: CreateTileContentDTO;
+
+  @IsOptional()
+  link?: string;
 }

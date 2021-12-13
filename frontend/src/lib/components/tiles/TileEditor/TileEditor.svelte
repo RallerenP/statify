@@ -38,6 +38,7 @@ import EditorTabs from "./EditorTabs.svelte";
   let dataSource = activeTab.dataSource
   let description = activeTab.description;
   let tileType = activeTab.type;
+  let link = '';
 
   const handleDataSourceChange = (e: KeyboardEvent) => {
     if (e.key === "Enter") get();
@@ -84,7 +85,8 @@ import EditorTabs from "./EditorTabs.svelte";
       height,
       x: 0,
       y: 0,
-      content: tabs
+      content: tabs,
+      link
     })
 
     dispatch('created');
@@ -150,9 +152,9 @@ import EditorTabs from "./EditorTabs.svelte";
         <div class="w-1/2">
           <span class="text-[18px]">Settings</span>
           <div class="form-control mt-2">
-            <InputField bind:value={label} disabled={titleIsDisabled}>Title</InputField>
+            <InputField bind:value={label} class="w-[90%]" disabled={titleIsDisabled}>Title</InputField>
             <div class="my-4 flex items-center">
-              <InputField class="flex-shrink-0" on:keydown={handleDataSourceChange} bind:value={dataSource} disabled={dataSourceIsDisabled}>Data Source</InputField>
+              <InputField class="flex-shrink-0 w-[90%]" on:keydown={handleDataSourceChange}  bind:value={dataSource} disabled={dataSourceIsDisabled}>Data Source</InputField>
               <!-- TODO: Fix -->
               {#if !valid}
               <div class="tooltip mx-4 bg-red" data-tip="Datasource is not compatible with this tile!">
@@ -164,7 +166,7 @@ import EditorTabs from "./EditorTabs.svelte";
               
             </div>
             
-            <InputField bind:value={description} disabled={descriptionIsDisabled}>Description</InputField>
+            <InputField bind:value={description} disabled={descriptionIsDisabled} class="w-[90%]">Description</InputField>
           </div> 
         </div>
         <div class="w-1/2 flex flex-col">
@@ -180,7 +182,8 @@ import EditorTabs from "./EditorTabs.svelte";
       </div>
     </div>
   </div>
-  <div class="mt-4">
+  <InputField class="w-full my-4" bind:value={link}>Link</InputField>
+  <div class="">
     <span class="text-[18px]">Tile Selector</span>
     <Splide options={options}>
       <SplideSlide class="flex-center splide__slide is-active is-visible">

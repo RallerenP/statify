@@ -57,6 +57,9 @@ export class Tile {
 
   @Prop({ required: true })
   content: Content[]
+
+  @Prop({ required: false })
+  link?: string;
 }
 
 
