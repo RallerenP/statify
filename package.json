@@ -13,7 +13,7 @@
     "compose:test": "docker-compose --env-file .env.testing up",
     "compose:dev": "docker-compose --env-file .env.dev up",
     "start": "node index.cjs",
-    "build": "cd backend && yarn install && yarn build && cd .. && cd frontend && yarn install && yarn build && cd .."
+    "build": "cd backend && npm install && npm build && cd .. && cd frontend && npm install && npm build && cd .."
   },
   "engines": {
     "node": "14.18.1"
@@ -22,7 +22,6 @@
     "statify": "bin/statify.js"
   },
   "dependencies": {
-    "@nestjs/cli": "^8.0.0",
     "chalk": "^5.0.0",
     "concurrently": "^6.4.0",
     "cy2": "^1.3.0",
