@@ -1,7 +1,7 @@
 {
   "name": "statify",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "index.cjs",
   "repository": "https://github.com/RallerenP/statify.git",
   "author": "RallerenP <17848169+RallerenP@users.noreply.github.com>",
   "license": "MIT",
@@ -11,15 +11,22 @@
     "cypress:record": "cy2 run --record --key somekey",
     "cypress:open": "cypress open",
     "compose:test": "docker-compose --env-file .env.testing up",
-    "compose:dev": "docker-compose --env-file .env.dev up"
+    "compose:dev": "docker-compose --env-file .env.dev up",
+    "start": "node index.cjs",
+    "build": "cd backend && npm run build && cd .. && cd frontend && npm run build && cd .."
+  },
+  "engines": {
+    "node": "14.18.1"
   },
   "bin": {
     "statify": "bin/statify.js"
   },
   "dependencies": {
     "chalk": "^5.0.0",
+    "concurrently": "^6.4.0",
     "cy2": "^1.3.0",
     "cypress": "^9.1.0",
-    "har-validator": "^5.1.5"
+    "har-validator": "^5.1.5",
+    "subdomain-router": "^0.1.3"
   }
 }

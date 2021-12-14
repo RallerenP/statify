@@ -1,7 +1,7 @@
 import type { CreateMenuItemDTO } from "./dtos/MenuDTOs";
 import type { CreateTileDTO, TileDTO } from "./dtos/TileDTOs";
 
-const base = `${window.location.protocol}//${window.location.hostname}:3000`;
+export const base = process.env.STAGING ? 'http://statify-staging-api.rpovlsen.com' : `${window.location.protocol}//${window.location.hostname}:3000`;
 
 export const getAllMenus = async () => {
   return httpGet(`${base}/menu`).then(res => res.json());
