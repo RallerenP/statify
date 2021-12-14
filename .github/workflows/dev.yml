@@ -57,12 +57,6 @@ jobs:
       - run: |
           npm install
           
-      - name: action-docker-compose
-        uses: sudo-bot/action-docker-compose@latest
-        with:
-          # Command line arguments
-          cli-args: "up"
-          
       # Run cypress test
       - name: Cypress.io
         uses: cypress-io/github-action@v2.9.7
