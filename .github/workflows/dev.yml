@@ -34,7 +34,7 @@ jobs:
           node-version: 14.18.1
           
       - name: MongoDB in Github Actions
-        uses: uses: supercharge/mongodb-github-action@1.7.0
+        uses: supercharge/mongodb-github-action@1.7.0
         
       
       # Build Backend
