@@ -12,19 +12,19 @@ services:
     image: node:14.18.1-buster
     volumes:
       - ./backend:/project:rw
-    command: npm run --prefix project ${CMD_BACK_END}
+    command: npm install --prefix backend && npm run --prefix project build && npm run --prefix project ${CMD_BACK_END} 
     ports:
       - 3000:3000
     depends_on:
       - mongo
     environment:
-      - DB_URL=mongodb://mongo:27017/${DB_NAME}
+      - DB_URL=${DB_URL}
 
   frontend:
     image: node:14.18.1-buster
     volumes:
       - ./frontend:/project:rw
-    command: npm run --prefix project ${CMD_FRONT_END} 
+    command: npm install --prefix frontend && npm run --prefix project build && npm run --prefix project ${CMD_FRONT_END}
     ports:
       - "5000:5000"
       - "4200:4200"
