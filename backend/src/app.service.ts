@@ -2,13 +2,11 @@ import { HttpService } from '@nestjs/axios';
 import { SubscriptionClient } from '@azure/arm-subscriptions';
 import { ClientSecretCredential } from '@azure/identity';
 import { Injectable } from '@nestjs/common';
-import azure_creds from '../secrets';
 import {
   AzureServiceClient,
   loginWithServicePrincipalSecret,
 } from 'ms-rest-azure';
 
-console.log(azure_creds);
 
 @Injectable()
 export class AppService {
