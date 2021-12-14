@@ -12,7 +12,7 @@
     "cypress:open": "cypress open",
     "compose:test": "docker-compose --env-file .env.testing up",
     "compose:dev": "docker-compose --env-file .env.dev up",
-    "compose:stage": "docker-compose --env-file .env.staging up",
+    "compose:stage": "docker-compose --env-file .env.staging up"
   },
   "engines": {
     "node": "14.18.1"
