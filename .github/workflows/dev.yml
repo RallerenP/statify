@@ -20,9 +20,7 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     env: 
-      DB_NAME: testing
-      CMD_FRONT_END: start
-      CMD_BACK_END: start
+      DB_URL: "mongodb://localhost:27017/test
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -34,12 +32,17 @@ jobs:
         uses: actions/setup-node@v2.5.0
         with: 
           node-version: 14.18.1
+          
+      - name: MongoDB in Github Actions
+        uses: uses: supercharge/mongodb-github-action@1.7.0
+        
       
       # Build Backend
       - run: |
           cd backend
           npm install
           npm run build
+          npm run start &
           cd ..
       
       # Build Frontend
@@ -47,6 +50,7 @@ jobs:
           cd frontend
           npm install
           npm run build
+          npm run start &
           cd ..
           
       # Install testing deps
