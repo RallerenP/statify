@@ -38,35 +38,35 @@ describe('TP 01 Menu Tests', () => {
     })
   })
 
-  context('2.1', () => {
-    before(() => {
-      cy.request('POST', `${base}/menu/`, { label: "Very Cool Menu" })
-      cy.request('POST', `${base}/menu/very-cool-menu`, { label: "Very Cool Submenu" })
-    })
+  // context('2.1', () => {
+  //   before(() => {
+  //     cy.request('POST', `${base}/menu/`, { label: "Very Cool Menu" })
+  //     cy.request('POST', `${base}/menu/very-cool-menu`, { label: "Very Cool Submenu" })
+  //   })
   
-    after(() => {
-      cy.request('DELETE', `${base}/menu/very-cool-menu`)
-    })
+  //   after(() => {
+  //     cy.request('DELETE', `${base}/menu/very-cool-menu`)
+  //   })
 
-    it ('Should open the app', () => {
-      cy.visit('/');
-    })
+  //   it ('Should open the app', () => {
+  //     cy.visit('/');
+  //   })
 
-    it ('Should toggle edit mode', () => {
-      cy.get('input[placeholder="New item..."]').should('have.length', 0)
-      cy.get('#edit-toggle').click();
-      cy.get('input[placeholder="New item..."]').should('have.length', 2)
-    })
+  //   it ('Should toggle edit mode', () => {
+  //     cy.get('input[placeholder="New item..."]').should('have.length', 0)
+  //     cy.get('#edit-toggle').click();
+  //     cy.get('input[placeholder="New item..."]').should('have.length', 2)
+  //   })
 
-    it ('Should expand a top-level menu', () => {
-      const parent = cy.get('div:contains(Very Cool Menu)')
-      parent.parent().children('button').click();
-      cy.get('div:contains(Very Cool Submenu)').should('be.visible');
-    })
+  //   it ('Should expand a top-level menu', () => {
+  //     const parent = cy.get('div:contains(Very Cool Menu)')
+  //     parent.parent().children('button').click();
+  //     cy.get('div:contains(Very Cool Submenu)').should('be.visible');
+  //   })
 
-    it ('Input a name for a menu item at the bottom of the top-level menu item', () => {
-      const menuitem = cy.get('div:contains(Very Cool Menu)')
+  //   it ('Input a name for a menu item at the bottom of the top-level menu item', () => {
+  //     const menuitem = cy.get('div:contains(Very Cool Menu)')
       
-    })
-  })
+  //   })
+  // })
 })
