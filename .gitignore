@@ -16,6 +16,8 @@ cypress/reports/*
 cypress/screenshots/*
 cypress/videos/*
 
+yarn.lock
+
 ### Node ###
 # Logs
 logs
