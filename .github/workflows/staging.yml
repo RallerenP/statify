@@ -26,9 +26,9 @@ jobs:
       - name: ssh-pipeline
         uses: cross-the-world/ssh-pipeline@v1.2.0
         with:
-          host: ${{ SSH_HOST }}
-          user: ${{ SSH_USERNAME }}
-          pass: ${{ SSH_PASSWORD }}
+          host: ${{ secrets.SSH_HOST }}
+          user: ${{ secrets.SSH_USERNAME }}
+          pass: ${{ secrets.SSH_PASSWORD }}
           script: |
             cd statify-docker-staging
             docker-compose down
