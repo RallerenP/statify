@@ -1,7 +1,7 @@
 import type { CreateMenuItemDTO } from "./dtos/MenuDTOs";
 import type { CreateTileDTO, TileDTO } from "./dtos/TileDTOs";
 
-export const base = process.env.BACKEND_URL || 'http://localhost:3000';
+export const base = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
 
 export const getAllMenus = async () => {
   return httpGet(`${base}/menu`).then(res => res.json());
