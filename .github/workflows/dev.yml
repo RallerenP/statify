@@ -60,15 +60,4 @@ jobs:
       # Run cypress test
       - name: Cypress.io
         uses: cypress-io/github-action@v2.9.7
-        
-      - name: ssh-pipeline
-        uses: cross-the-world/ssh-pipeline@v1.2.0
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          user: ${{ secrets.SSH_USERNAME }}
-          pass: ${{ secrets.SSH_PASSWORD }}
-          script: |
-            cd statify-dev
-            docker-compose down
-            docker-compose up -d
           
