@@ -1,6 +1,5 @@
 import type { CreateMenuItemDTO } from "./dtos/MenuDTOs";
 import type { CreateTileDTO, TileDTO } from "./dtos/TileDTOs";
-import { auth } from "../firebase/firebase";
 
 export const base = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
 
@@ -47,7 +46,6 @@ async function httpPost(url: string, body: any) {
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + await auth.currentUser.getIdToken()
     },
   })
 }
@@ -59,7 +57,6 @@ async function httpPut(url: string, body: any) {
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + await auth.currentUser.getIdToken()
     },
   })
 };
@@ -67,8 +64,5 @@ async function httpPut(url: string, body: any) {
 async function httpDelete(url: string) {
   return fetch(url, { 
     method: 'delete',
-    headers: {
-      'Authorization': 'Bearer ' + await auth.currentUser.getIdToken()
-    }
   })
 }

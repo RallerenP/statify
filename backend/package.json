@@ -38,7 +38,7 @@
     "@types/passport-local": "^1.0.34",
     "azure-sdk-for-js": "^0.0.1",
     "bcrypt": "^5.0.1",
-    "class-transformer": "^0.4.0",
+    "class-transformer": "0.4.0",
     "class-validator": "^0.13.1",
     "cookie-parser": "^1.4.6",
     "firebase-admin": "^10.0.1",
