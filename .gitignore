@@ -184,3 +184,5 @@ dist
 # .pnp.*
 
 # End of https://www.toptal.com/developers/gitignore/api/cypressio,yarn,node,visualstudiocode
+
+firebaseServiceAccount.json
