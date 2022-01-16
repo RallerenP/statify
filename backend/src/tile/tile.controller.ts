@@ -1,6 +1,6 @@
 import { CreateTileDTO } from './dtos/create-tile-dto';
 import { TileService } from './services/tile.service';
-import { Controller, Delete, Get, Param, Body, Put, Post } from '@nestjs/common';
+import { Controller, Delete, Get, Param, Body, Put, Post, UseGuards } from '@nestjs/common';
 import { UpdateTileDTO } from './dtos/update-tile.dto';
 import { Tile } from './schemas/tile.schema';
 import { ApiTags } from '@nestjs/swagger';
@@ -33,7 +33,7 @@ export class TileController {
    */
   @Delete('/:id')
   deleteTile(@Param('id') id: string) {
-    this.tileService.delete(id);
+    return this.tileService.delete(id);
   }
 
   /**

@@ -12,6 +12,7 @@ services:
     image: node:14.18.1-buster
     volumes:
       - ./backend:/project:rw
+      - ./firebaseServiceAccount.json:/firebaseServiceAccount.json:ro
     command: npm run --prefix project ${CMD_BACK_END} 
     ports:
       - 3000:3000
@@ -19,6 +20,7 @@ services:
       - mongo
     environment:
       - DB_URL=${DB_URL}
+      - secret=${SECRET:-Bad Secret}
 
   frontend:
     image: node:14.18.1-buster

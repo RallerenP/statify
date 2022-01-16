@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Mongoose, RefType, Schema as _Schema } from 'mongoose';
+import { Document, Schema as _Schema } from 'mongoose';
 
 export type TileDocument = Tile & Document;
 
@@ -60,6 +60,9 @@ export class Tile {
 
   @Prop({ required: false })
   link?: string;
+
+  @Prop({ default: false })
+  public: string
 }
 
 

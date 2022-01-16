@@ -1,4 +1,5 @@
 <script>
+  import './lib/firebase/firebase'
   import Router from "./lib/components/Router.svelte";
 
   import Content from "./lib/Content.svelte";
