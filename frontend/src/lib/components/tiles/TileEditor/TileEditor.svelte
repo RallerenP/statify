@@ -11,7 +11,7 @@
   import { TileContentDTO, TileTypes } from "../../../api/dtos/TileDTOs";
   import { createTile } from "../../../api/api";
   import type { DataSourceDTO } from "../../../api/dtos/DataSourceDTO";
-import EditorTabs from "./EditorTabs.svelte";
+  import EditorTabs from "./EditorTabs.svelte";
 
   let dispatch = createEventDispatcher();
 

@@ -1,14 +1,7 @@
 <script lang="ts">
 import type { TileDTO } from "../../api/dtos/TileDTOs";
-import Number from "./tileTypes/Number.svelte";
 import { createEventDispatcher } from 'svelte';
-import OnOff from "./tileTypes/OnOff.svelte";
-import Chart from "./tileTypes/Chart.svelte";
 import Tile from './tileTypes/Tile.svelte';
-import Divider from "./tileTypes/Divider.svelte";
-import Header from "./tileTypes/Header.svelte";
-import Description from "./tileTypes/Description.svelte";
-import Content from "../../Content.svelte";
 
   const dispatch = createEventDispatcher();
 

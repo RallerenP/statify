@@ -8,6 +8,7 @@ import { MenuModule } from './menu/menu.module';
 import { TileModule } from './tile/tile.module';
 import { BitcoinModule } from './bitcoin/bitcoin.module';
 import { RandomModule } from './random/random.module';
+import { CoronaModule } from './corona/corona.module';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 
@@ -20,6 +21,7 @@ import { UserModule } from './user/user.module';
     TileModule,
     BitcoinModule,
     RandomModule,
+    CoronaModule,
     AuthModule,
     UserModule,
   ],

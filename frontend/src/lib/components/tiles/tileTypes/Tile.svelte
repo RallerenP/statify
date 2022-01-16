@@ -2,19 +2,17 @@
   import GridStackItem from "../../GridStack/GridStackItem.svelte";
   import { onMount, createEventDispatcher, tick } from "svelte";
   import Spinner from "../../../Spinner.svelte";
-  import Chart from "chart.js/auto";
   import Number from "./Number.svelte";
   import ChartComponent from './Chart.svelte'
   import { edit } from "../../../../stores/stores";
   import type { TileContentDTO, TileDTO } from "../../../api/dtos/TileDTOs";
   import { TileTypes } from  '../../../api/dtos/TileDTOs'
-  import { generateColors } from "./Utils"
   import { deleteTile } from "../../../api/api";
   import OnOff from "./OnOff.svelte";
   import Divider from "./Divider.svelte";
   import Header from "./Header.svelte";
   import Description from "./Description.svelte";
-import TileTypeIcon from "./TileTypeIcon.svelte";
+  import TileTypeIcon from "./TileTypeIcon.svelte";
 
   const dispatch = createEventDispatcher();
 
